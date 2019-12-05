@@ -46,18 +46,17 @@ class WikiEpisodeTableSpider(CrawlSpider):
             ep_sums = [BeautifulSoup(ep_sum, "lxml").get_text().strip() for ep_sum in ep_sums]
             ep_titles = [BeautifulSoup(ep_title, "lxml").get_text().strip() for ep_title in ep_titles]
 
-            # parse unqiue items
+            # parse unique items
             for ep_title, ep_sum in zip(ep_titles, ep_sums):
                 if ep_sum not in self.unique_episode_summaries:
-                   self.num_episodes += len(ep_sums)
-                   self.unique_episode_summaries.add(ep_sum)
+                    self.num_episodes += len(ep_sums)
+                    self.unique_episode_summaries.add(ep_sum)
 
-                   loader = ItemLoader(item=EpisodeSummaryGeneratorItem())
-                   loader.add_value("source_url", response.url)
-                   loader.add_value("episode_title", ep_title)
-                   loader.add_value("episode_summary", ep_sum)
-                   yield loader.load_item()
-
+                    loader = ItemLoader(item=EpisodeSummaryGeneratorItem())
+                    loader.add_value("source_url", response.url)
+                    loader.add_value("episode_title", ep_title)
+                    loader.add_value("episode_summary", ep_sum)
+                    yield loader.load_item()
 
     def parse_episode_tables(self, ep_tables):
         ep_titles = []
@@ -70,7 +69,7 @@ class WikiEpisodeTableSpider(CrawlSpider):
             # some episode tables only contain the episode titles + other information, but not the ep summaries
             # also, so episode tables have missing summaries for some (yet to be aired) episodes
             if not ep_table_sums or not ep_table_titles:
-            	continue
+                continue
 
             for i in range(len(ep_table_sums)):
                 ep_sums.append(ep_table_sums[i])
