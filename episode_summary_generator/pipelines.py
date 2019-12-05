@@ -12,7 +12,7 @@ def preprocess_text(text):
 
 class EpisodeSummaryGeneratorPipeline(object):
 
-    def process_item(self, item):
+    def process_item(self, item, spider):
         if item['source_url']:
             item['source_url'] = item['source_url'][0] 
         

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import scrapy
 from bs4 import BeautifulSoup
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
