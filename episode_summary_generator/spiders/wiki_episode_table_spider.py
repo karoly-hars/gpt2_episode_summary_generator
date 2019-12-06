@@ -8,6 +8,11 @@ from episode_summary_generator.items import EpisodeSummaryGeneratorItem
 
 class WikiEpisodeTableSpider(CrawlSpider):
     name = 'wiki_episode_table_spider'
+
+    # set obey robots to True for Wikipedia
+    custom_settings = {
+        "ROBOTSTXT_OBEY": True,
+    }
     
     def __init__(self, start_url, allow, deny='', title_keywords='', *args, **kwargs):
         super(WikiEpisodeTableSpider, self).__init__(*args, **kwargs)
@@ -15,8 +20,10 @@ class WikiEpisodeTableSpider(CrawlSpider):
         self.allowed_domains = ['en.wikipedia.org']
         self.start_urls = [start_url]
         self.to_allow = allow
-        self.to_deny = ["/Talk:", "/Wikipedia_talk:", "/Category:", "/Wikipedia:", "/Template:"] + [word for word in deny.strip().split()]
         self.title_keywords = [word.lower() for word in title_keywords.strip().split()]
+        # this will be used to get rid of some nasty redirects by Wikipedia:
+        self.to_deny = ["/Talk:", "/Wikipedia_talk:", "/Category:", "/Wikipedia:", "/Template:"] + \
+                       [word for word in deny.strip().split()]
 
         self.num_episodes = 0
         self.unique_episode_summaries = set()
@@ -33,8 +40,7 @@ class WikiEpisodeTableSpider(CrawlSpider):
     def parse_item(self, response):
         page_header = response.xpath('//title').extract_first()
 
-        if page_header and all([keyword in page_header.lower() for keyword in self.title_keywords]):
-        
+        if page_header and all([keyword in page_header.lower() for keyword in self.title_keywords]):       
             # parse episode tables
             ep_tables = response.xpath('//table[@class="wikitable plainrowheaders wikiepisodetable"]')
             ep_titles, ep_sums = self.parse_episode_tables(ep_tables)
@@ -56,6 +62,9 @@ class WikiEpisodeTableSpider(CrawlSpider):
                     loader.add_value("source_url", response.url)
                     loader.add_value("episode_title", ep_title)
                     loader.add_value("episode_summary", ep_sum)
+                    # in this case, the show title can be None, since it derivable from the url
+                    loader.add_value("tv_show_title", "")
+
                     yield loader.load_item()
 
     def parse_episode_tables(self, ep_tables):

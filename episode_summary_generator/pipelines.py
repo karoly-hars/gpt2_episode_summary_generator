@@ -22,4 +22,7 @@ class EpisodeSummaryGeneratorPipeline(object):
         if item['episode_summary']:
             item['episode_summary'] = preprocess_text(item['episode_summary'][0])
 
+        if item['tv_show_title']:
+            item['tv_show_title'] = preprocess_text(item['tv_show_title'][0])
+
         return item
