@@ -14,7 +14,7 @@ class ImdbEpisodeSummarySpiderSpider(scrapy.Spider):
         super(ImdbEpisodeSummarySpiderSpider, self).__init__(*args, **kwargs)
 
         self.title_keywords = [word.lower() for word in title_keywords.strip().split()]
-        start_search_url_substring = '+'.join(title_keywords)
+        start_search_url_substring = '+'.join(self.title_keywords)
         self.start_urls = ['https://www.imdb.com/find?q={}&s=tt&ref_=fn_al_tt_mr'.format(start_search_url_substring)]
 
     def parse(self, response):
@@ -38,11 +38,11 @@ class ImdbEpisodeSummarySpiderSpider(scrapy.Spider):
 
     def parse_tv_show_page(self, response):
         """Look up the episode list urls."""
-        # get the rating count. if its > 500, this might be a real TV show, not some fan-made project
-        # this does not work all the time, but in my experience it might be a good indicator
         ratings_wrapper = response.xpath('//div[@class="ratings_wrapper"]')
 
         if ratings_wrapper:
+            # get the rating count. if its > 500, this might be a real TV show, not some fan-made project
+            # this does not work all the time, but in my experience it might be a good indicator
             rating_count = ratings_wrapper.xpath('//span[@itemprop="ratingCount"]/text()').extract_first()
             if rating_count:
                 rating_count = int(rating_count.replace(',', ''))
