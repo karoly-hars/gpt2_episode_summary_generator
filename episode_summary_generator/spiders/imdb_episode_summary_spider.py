@@ -80,9 +80,11 @@ class ImdbEpisodeSummarySpiderSpider(scrapy.Spider):
         for ep_sum in summaries:
             ep_sum = ep_sum.strip()
 
-            loader = ItemLoader(item=EpisodeSummaryGeneratorItem())
-            loader.add_value("source_url", response.url)
-            loader.add_value("episode_title", ep_title)
-            loader.add_value("episode_summary", ep_sum)
-            loader.add_value("tv_show_title", show_title)
-            yield loader.load_item()
+            if "Be the first to contribute".lower() not in ep_sum.lower():
+                loader = ItemLoader(item=EpisodeSummaryGeneratorItem())
+                loader.add_value("source_url", response.url)
+                loader.add_value("episode_title", ep_title)
+                loader.add_value("episode_summary", ep_sum)
+                loader.add_value("tv_show_title", show_title)
+
+                yield loader.load_item()
