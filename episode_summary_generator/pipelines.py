@@ -5,8 +5,17 @@ import re
 def preprocess_text(text):
     text = re.sub('[\(\[].*?[\)\]]', '', text)  # remove brackets
     text = re.sub(' +', ' ', text)  # remove multiple whitespaces
-    text = text.strip()  # strip
-    text = text.strip('\"')  # strip ""s
+    text = text.strip().strip('\"').strip()  # strip ""s and possible leftover whitespaces
+
+    # Wiki summaries as sometimes structured like this:
+    #
+    # Some actual episode summary bla bla...
+    # \n\n
+    # Some "fun" fact about the directory or the actors or some note from the writer
+    #
+    # Obviously we want to get rid of the part after the \n-s
+    text = text.split("\n")[0]
+
     return text
 
 
