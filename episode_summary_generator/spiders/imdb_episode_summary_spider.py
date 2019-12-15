@@ -70,21 +70,16 @@ class ImdbEpisodeSummarySpiderSpider(scrapy.Spider):
     def parse_plot_summary_page(self, response):
         """Create and load the episode summary items."""
         show_title = response.xpath('//div[@class="subpage_title_block"]//h4/a/text()').extract_first().strip()
-
         ep_title = response.xpath('//div[@class="subpage_title_block"]//h3/a/text()').extract_first().strip()
-
-        summaries = response.xpath(
-            '//ul[@id="plot-summaries-content"]/li[@class="ipl-zebra-list__item"]/p/text()'
-        ).extract()
+        summaries = response.xpath('//ul[@id="plot-summaries-content"]/li[@class="ipl-zebra-list__item"]/p').extract()
 
         for ep_sum in summaries:
-            ep_sum = ep_sum.strip()
+            ep_sum = BeautifulSoup(ep_sum, "lxml").get_text().strip()
 
-            if "Be the first to contribute".lower() not in ep_sum.lower():
+            if "be the first to contribute" not in ep_sum.lower():
                 loader = ItemLoader(item=EpisodeSummaryGeneratorItem())
                 loader.add_value("source_url", response.url)
                 loader.add_value("episode_title", ep_title)
                 loader.add_value("episode_summary", ep_sum)
                 loader.add_value("tv_show_title", show_title)
-
                 yield loader.load_item()
