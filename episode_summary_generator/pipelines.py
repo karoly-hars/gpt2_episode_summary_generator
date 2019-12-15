@@ -12,6 +12,7 @@ def preprocess_title(text):
 def preprocess_summary(text):
     text = re.sub('[\(\[].*?[\)\]]', '', text)  # remove brackets
     text = re.sub(' +', ' ', text)  # remove multiple whitespaces
+    text = re.sub('\s+\.\s+', '. ',  text)  # removed whitespaces from before dots
 
     # wiki summaries as sometimes structured like this:
     # "Some actual episode summary bla bla...
@@ -21,11 +22,15 @@ def preprocess_summary(text):
     text = text.split("\n")[0]
 
     # make sure the last sentence ends with '.', '!', or '?', if there is a half finished sentence that is usually a
-    # citation or reference on wikipedia
+    # citation or reference on Wikipedia
     if not (text.endswith(".") or text.endswith("?") or text.endswith("!")):
         last_closing = max([text.rfind('.'), text.rfind('?'), text.rfind('!')])
         if last_closing > 0:
             text = text[:last_closing+1]
+
+    if text.endswith(" ."):
+        text = text[:-2]+"."
+
     return text
 
 
