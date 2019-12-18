@@ -22,7 +22,7 @@ def get_arguments():
                              '\n Good practice: use the lowercase version of the words from the show\'s title'
                              '\n Example: star trek')
     parser.add_argument('-o', '--output_path', type=str, required=False, default='wiki_episode_summaries.json',
-                        help='Path to the output JSON file.')
+                        help='Path to the output JSON file. If the file already exists, it will be overwritten.')
 
     args = parser.parse_args()
     return args
@@ -30,6 +30,10 @@ def get_arguments():
 
 if __name__ == "__main__":
     args = get_arguments()
+
+    # remove output file if it already exists
+    if os.path.exists(args.output_path):
+        os.remove(args.output_path)
 
     # call spider
     call = 'scrapy crawl wiki_episode_table_spider ' \
