@@ -14,16 +14,14 @@ class WikiEpisodeTableSpider(CrawlSpider):
         "ROBOTSTXT_OBEY": True,
     }
     
-    def __init__(self, start_url, allow, deny='', title_keywords='', *args, **kwargs):
+    def __init__(self, start_url, allow, title_keywords='', *args, **kwargs):
         super(WikiEpisodeTableSpider, self).__init__(*args, **kwargs)
 
         self.allowed_domains = ['en.wikipedia.org']
         self.start_urls = [start_url]
         self.to_allow = allow
         self.title_keywords = [word.lower() for word in title_keywords.strip().split()]
-        # this will be used to get rid of some nasty redirects by Wikipedia:
-        self.to_deny = ["/Talk:", "/Wikipedia_talk:", "/Category:", "/Wikipedia:", "/Template:"] + \
-                       [word for word in deny.strip().split()]
+        self.to_deny = ["/Talk:", "/Wikipedia_talk:", "/Category:", "/Wikipedia:", "/Template:"]
 
         self.num_episodes = 0
         self.unique_episode_summaries = set()
