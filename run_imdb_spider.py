@@ -4,7 +4,7 @@ import argparse
 
 def get_arguments():
     parser = argparse.ArgumentParser(
-        description="IMDb episode summary parser.",
+        description="IMDb episode summary spider.",
         formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=75)
     )
     parser.add_argument('-t', '--title_keywords', nargs='*',

@@ -4,7 +4,7 @@ import argparse
 
 def get_arguments():
     parser = argparse.ArgumentParser(
-        description="Wikipedia episode summary parser.",
+        description="Wikipedia episode summary spider.",
         formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=75)
     )
     parser.add_argument('-s', '--start_url', type=str, required=True,
