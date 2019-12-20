@@ -105,8 +105,8 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
     def pad_batch_to_same_size(self, batch):
         """Given a batch of tokenized text (lists of integers), pad them to the same size.
 
-        - find the length of the longest list in the batch
-        - pad all the sequences in the batch to this size by adding <|endoftext|> tokens to the end of the lists.
+        Find the length of the longest list in the batch,
+        and pad all the sequences in the batch to this size by adding <|endoftext|> tokens to the end of the lists.
 
         :param batch: List of lists
         :return: Torch tensor created from the padded input batch.
