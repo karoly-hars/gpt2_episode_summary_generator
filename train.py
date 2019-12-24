@@ -1,7 +1,9 @@
 import argparse
 import torch
 from dataset import EpisodeSummaryTokenizer, create_datasets_from_jsons
+from utils import set_random_seeds
 from torch.utils.data import DataLoader
+from pytorch_transformers import GPT2LMHeadModel, AdamW, WarmupLinearSchedule
 
 
 def make_train_state(save_path, early_stopping_patience):
@@ -57,17 +59,56 @@ def update_train_state(model, train_state, steps, train_loss, val_loss):
     return train_state
 
 
-def run_training(args):
-    # create tokenizer, datasets and loaders
+def initialize_training(args, device):
+    """Initalize the tokenizer, the data loaders, the model and the tools of the optimization process."""
+    # Create tokenizer, datasets and loaders
     tokenizer = EpisodeSummaryTokenizer.from_pretrained(
         args.gpt2_version, max_num_words=args.max_num_words, size_variance_handling=args.size_var_handling
     )
     train_dataset, val_dataset = create_datasets_from_jsons(args.json_paths, tokenizer, args.val_split)
 
-    train_dataloader = DataLoader(
-        train_dataset, shuffle=True, batch_size=args.batch_size, collate_fn=tokenizer.pad_batch_to_same_size
-    )
-    val_dataloader = DataLoader(val_dataset, batch_size=1, collate_fn=tokenizer.pad_batch_to_same_size)
+    dataloaders = {
+        "train": DataLoader(train_dataset,
+                            shuffle=True,
+                            batch_size=args.batch_size,
+                            collate_fn=tokenizer.pad_batch_to_same_size),
+        "val": DataLoader(val_dataset,
+                          batch_size=1,
+                          collate_fn=tokenizer.pad_batch_to_same_size)
+    }
+
+    # Load pre-trained network weights
+    model = GPT2LMHeadModel.from_pretrained(args.gpt2_version)
+    model = model.to(device)
+
+    # Prepare optimizer and scheduler
+    no_decay = ['bias', 'LayerNorm.weight']  # no decay for biases and layer norm
+    optimizer_grouped_parameters = [
+        {
+            'params': [p for n, p in model.named_parameters() if not any(nd in n for nd in no_decay)],
+            'weight_decay': args.weight_decay
+        },
+        {
+            'params': [p for n, p in model.named_parameters() if any(nd in n for nd in no_decay)],
+            'weight_decay': 0.0
+        }
+    ]
+    optimizer = AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon)
+    scheduler = WarmupLinearSchedule(optimizer, warmup_steps=0, t_total=args.max_steps)
+
+    return tokenizer, dataloaders, model, optimizer, scheduler
+
+
+def run_training(args):
+    """Run training process."""
+    # Set seed
+    set_random_seeds(args.random_seed)
+
+    # Initialize training
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    tokenizer, dataloaders, model, optimizer, scheduler = initialize_training(args, device)
+
+    model.zero_grad()
 
 
 def get_arguments():
@@ -76,8 +117,8 @@ def get_arguments():
         description="GPT-2 model traning for text generation.",
         formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=75)
     )
-    # args related to the data
-    parser.add_argument("-s", "--seed", type=int, required=False, default=0, help="Random seed.")
+    # Args related to the data
+    parser.add_argument("-s", "--random_seed", type=int, required=False, default=0, help="Random seed.")
     parser.add_argument("-v", "--val_split", type=float, required=False, default=0.1,
                         help="Ratio of the validation subset size compared to all available data.")
     parser.add_argument("-m", "--max_num_words", type=int, required=False, default=96,
@@ -96,7 +137,7 @@ def get_arguments():
                         default=["wiki_episode_summaries.json", "imdb_episode_summaries.json"],
                         help="Path to the JSON files which contain the episode data (the outputs of the spiders).")
 
-    # training and optimization args
+    # Training and optimization args
     parser.add_argument("-b", "--batch_size", type=int, required=False, default=4, help="Batch size.")
     parser.add_argument("-w", "--weight_decay", type=float, required=False, default=0.01, help="Weight decay.")
     parser.add_argument("-lr", "--learning_rate", type=float, required=False, default=5e-5,

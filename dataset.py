@@ -218,26 +218,3 @@ def create_datasets_from_jsons(json_file_paths, tokenizer, val_split_ratio):
     print("  Training set size: {}\n  Validation set size: {}".format(len(train_dataset), len(val_dataset)))
 
     return train_dataset, val_dataset
-
-
-"""
-json_paths = [
-    "/home/broccoli_consumer/workspace/episode_summary_generator/ep_data/star_trek_imdb_ep_sums.json",
-    "/home/broccoli_consumer/workspace/episode_summary_generator/ep_data/star_trek_wiki_ep_sums.json"
-]
-
-tokenizer = EpisodeSummaryTokenizer.from_pretrained("gpt2", max_num_words=96,
-                                                    size_variance_handling="chop_at_sentence_end")
-
-
-train_dataset, val_dataset = create_datasets_from_jsons(json_paths, tokenizer, 0.1)
-
-print(len(train_dataset), len(val_dataset))
-print(train_dataset._max_seq_size, val_dataset._max_seq_size)
-
-from torch.utils.data import DataLoader
-train_dataloader = DataLoader(train_dataset, shuffle=True, batch_size=4, collate_fn=tokenizer.pad_batch_to_same_size)
-val_dataloader = DataLoader(val_dataset, batch_size=1, collate_fn=tokenizer.pad_batch_to_same_size)
-
-print(len(train_dataloader), len(val_dataloader))
-"""
