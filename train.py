@@ -1,7 +1,7 @@
 import argparse
 import torch
 from dataset import EpisodeSummaryTokenizer, create_datasets_from_jsons
-from utils import set_random_seeds
+from utils import set_random_seeds, generate_sequence
 from torch.utils.data import DataLoader
 from pytorch_transformers import GPT2LMHeadModel, AdamW, WarmupLinearSchedule
 
@@ -95,7 +95,6 @@ def initialize_training(args, device):
     ]
     optimizer = AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon)
     scheduler = WarmupLinearSchedule(optimizer, warmup_steps=0, t_total=args.max_steps)
-
     model.zero_grad()
 
     train_state = make_train_state(save_path=args.model_save_path, early_stopping_patience=args.early_stopping_patience)
@@ -104,6 +103,7 @@ def initialize_training(args, device):
 
 
 def forward_batch(model, batch, device):
+    """Run a batch of data through a network/model."""
     inputs, labels = (batch, batch)
     inputs, labels = inputs.to(device), labels.to(device)
 
@@ -124,76 +124,72 @@ def run_training(args):
 
     # Run training process
     steps = 0
+    model.train()
+    print("Running training...")
 
-    """
-    while steps < args.max_steps:
-        # Training
+    while steps < args.max_steps and not train_state['stop_early']:
         model.train()
 
-        for batch in dataloaders["train"]:
+        running_train_loss = 0
+        num_train_samples = 0
+        running_val_loss = 0
+        num_val_samples = 0
+
+        for train_batch in dataloaders["train"]:
             optimizer.zero_grad()
 
-            loss, logits = forward_batch(model, batch, device)
-
-            train_loss += loss.item()
-            train_n += 1
+            loss, logits = forward_batch(model, train_batch, device)
 
             loss.backward()
             optimizer.step()
             scheduler.step()
             model.zero_grad()
 
+            running_train_loss += loss.item()
+            num_train_samples += train_batch.size()[0]
+
             steps += 1
 
-            # Every X step
+            # Checkpoint
             if steps > 0 and steps % args.checkpoint_steps == 0:
-                print("\n============== {} / {} ==============".format(steps, args.max_steps))
-
-                # iter over the val dataset
                 model.eval()
-                for batch_data in val_dataloader:
-                    inputs, labels = (batch_data, batch_data)
-                    inputs, labels = inputs.to(device), labels.to(device)
 
-                    outputs = model(inputs, labels=labels)
-                    loss, logits = outputs[:2]
-                    val_loss += loss.item()
-                    val_n += 1
+                for val_batch in dataloaders["val"]:
+                    loss, logits = forward_batch(model, val_batch, device)
 
-                train_loss /= train_n
-                val_loss /= val_n
-                train_state = update_train_state(model, train_state, steps, train_loss, val_loss)
+                    running_val_loss += loss.item()
+                    num_val_samples += val_batch.size()[0]
 
-                print("train loss={:.4f} | val loss={:.4f}".format(train_state['train_loss'][-1],
-                                                                   train_state['val_loss'][-1]))
+                train_state = update_train_state(model, train_state, steps,
+                                                 running_train_loss / num_train_samples,
+                                                 running_val_loss / num_val_samples)
 
+                print("\n============== {} / {} ==============".format(steps, args.max_steps))
+                print("train loss: {:.4f} | val loss: {:.4f}".format(train_state['train_loss'][-1],
+                                                                     train_state['val_loss'][-1]))
                 # generate some samples
-                generated = generate_sequence(model,
-                                              tokenizer,
+                generated = generate_sequence(model, tokenizer,
                                               max_length=args.max_gen_len,
                                               num_samples=args.num_samples,
                                               top_k=args.sampling_top_k,
-                                              top_p=args.sampling_top_p,
                                               device=device)
                 print("-" * 41)
-                for gen_text in generated:
-                    print(gen_text)
+                print(*generated, sep="\n")
                 print("-" * 41)
 
                 # check for early stopping
                 if train_state['stop_early']:
-                    print("\ntraining finished with early stopping.")
-                    print("best loss={:.4f}".format(train_state['min_val_loss']))
+                    print("\nTraining finished with early stopping.")
+                    print("best loss: {:.4f}".format(train_state['min_val_loss']))
                     break
 
                 # reset sums and set model back to train
-                train_loss = val_loss = train_n = val_n = 0
+                running_train_loss = 0
+                num_train_samples = 0
+                running_val_loss = 0
+                num_val_samples = 0
                 model.train()
 
-        if train_state['stop_early']:
-            break
-    """
-    
 
 def get_arguments():
     """Collect command line arguments."""
