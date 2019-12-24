@@ -14,7 +14,7 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
     and determine how to handle oversized text sequences:
 
     - max_num_words: The maximum number of words allowed in our episode summaries
-    - size_variance_handling: A string, that describes how we want to handle texts with variable length.
+    - size_variance_handling: A string, that describes the handling of texts with different lengths.
         Options: - 'chop_at_sentence_end': Chop long texts to make sure that they contain <= words than max_num_words,
                                            but only chop at the end of a sentence.
                                            If that is not possible, return None instead of vectorizing the text.
