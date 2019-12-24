@@ -41,7 +41,8 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
         self.size_var_handling_fnc = self._look_up_dict[size_variance_handling]
 
     def preprocess_text(self, text):
-        """Pre-process (chop to size + tokenize) text.
+        """
+        Pre-process (chop to size + tokenize) text.
 
         :param text: String text
         :return: The tokenized and vectorized text (list of integers)
@@ -57,7 +58,8 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
 
     @staticmethod
     def _is_sentence_end(word):
-        """Decide, if a word is possibly the end a of a sentence.
+        """
+        Decide, if a word is possibly the end a of a sentence.
 
         In the previous processing steps, the whitespaces are removed from before "." characters, and the text is
         split around the whitespaces, so a word is likely at the end of a sentence, if it ends with ".", "!" or "?".
@@ -90,7 +92,8 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
         return False
 
     def _chop_text_at_sentence_end(self, text):
-        """Try to cut down a text to a given size.
+        """
+        Try to cut down a text to a given size.
 
         If the number of words in the text is shorter than the threshold, return it. If it is longer,
         try to break off some sentences to make it shorter.
@@ -122,7 +125,8 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
         return " ".join(words[:last_cut_idx])
 
     def _chop_text(self, text):
-        """Chop down a text to a size.
+        """
+        Chop down a text to a size.
 
         :param text: String text
         :return: Chopped text, containing <= words than max_num_words
@@ -135,7 +139,8 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
         return " ".join(words[:self.max_num_words])
 
     def pad_batch_to_same_size(self, batch):
-        """Given a batch of tokenized text (lists of integers), pad them to the same size.
+        """
+        Given a batch of tokenized text (lists of integers), pad them to the same size.
 
         Find the length of the longest list in the batch,
         and pad all the sequences in the batch to this size by adding <|endoftext|> tokens to the end of the lists.
@@ -174,7 +179,8 @@ class EpisodeSummaryDataset(Dataset):
 
 
 def create_datasets_from_jsons(json_file_paths, tokenizer, val_split_ratio):
-    """Parse the data from a list of JSON files, and create an EpisodeSummaryDataset object.
+    """
+    Parse the data from a list of JSON files, and create EpisodeSummaryDataset objects for train/validation.
 
     :param json_file_paths: List of JSON file paths
     :param tokenizer: Tokenizer object
@@ -216,12 +222,12 @@ def create_datasets_from_jsons(json_file_paths, tokenizer, val_split_ratio):
 
 """
 json_paths = [
-    "/home/broccoli_consumer/workspace/episode_summary_generator/ep_data/stargate_imdb_ep_sums.json",
-    "/home/broccoli_consumer/workspace/episode_summary_generator/ep_data/stargate_wiki_ep_sums.json"
+    "/home/broccoli_consumer/workspace/episode_summary_generator/ep_data/star_trek_imdb_ep_sums.json",
+    "/home/broccoli_consumer/workspace/episode_summary_generator/ep_data/star_trek_wiki_ep_sums.json"
 ]
 
-tokenizer = EpisodeSummaryTokenizer.from_pretrained("gpt2", max_num_words=32,
-                                                    size_variance_handling="ignore")
+tokenizer = EpisodeSummaryTokenizer.from_pretrained("gpt2", max_num_words=96,
+                                                    size_variance_handling="chop_at_sentence_end")
 
 
 train_dataset, val_dataset = create_datasets_from_jsons(json_paths, tokenizer, 0.1)
