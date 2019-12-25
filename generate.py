@@ -32,7 +32,7 @@ def generate_samples(args):
                                   device=device)
     print("Generated samples:")
     print("-" * 41)
-    print(*generated, sep="\n")
+    print(*generated, sep="\n\n")
     print("-" * 41)
 
 
@@ -43,7 +43,7 @@ def get_arguments():
         formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=75)
     )
 
-    parser.add_argument("-s", "--random_seed", type=int, required=False, default=0, help="Random seed.")
+    parser.add_argument("-s", "--random_seed", type=int, required=False, default=99, help="Random seed.")
     parser.add_argument("-g", "--gpt2_version", type=str, required=False, default="gpt2-medium",
                         choices=["gpt2, gpt2-medium", "gpt2-large"],
                         help="Which GPT2 version to use from pytorch-transformers.")

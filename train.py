@@ -199,7 +199,7 @@ def get_arguments():
         formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=75)
     )
     # Args related to the data
-    parser.add_argument("-s", "--random_seed", type=int, required=False, default=0, help="Random seed.")
+    parser.add_argument("-s", "--random_seed", type=int, required=False, default=99, help="Random seed.")
     parser.add_argument("-v", "--val_split", type=float, required=False, default=0.1,
                         help="Ratio of the validation subset size compared to all available data.")
     parser.add_argument("-m", "--max_num_words", type=int, required=False, default=96,

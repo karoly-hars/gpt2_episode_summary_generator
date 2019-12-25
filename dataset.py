@@ -197,6 +197,8 @@ def create_datasets_from_jsons(json_file_paths, tokenizer, val_split_ratio):
         for ep_data in json_data:
             episode_summaries.append(ep_data["episode_summary"])
 
+    episode_summaries.sort()
+
     tokenized_summaries = []
     for ep_sum in episode_summaries:
         tokenized_summary = tokenizer.preprocess_text(ep_sum)
@@ -208,8 +210,9 @@ def create_datasets_from_jsons(json_file_paths, tokenizer, val_split_ratio):
         len(episode_summaries) - len(tokenized_summaries), len(episode_summaries)
     ))
 
-    # break up episode summaries into train and val subsets
     random.shuffle(tokenized_summaries)
+
+    # break up episode summaries into train and val subsets
     train_ep_sums = tokenized_summaries[int(len(tokenized_summaries) * val_split_ratio):]
     val_ep_sums = tokenized_summaries[:int(len(tokenized_summaries) * val_split_ratio)]
 
