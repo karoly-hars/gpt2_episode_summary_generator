@@ -73,7 +73,8 @@ def initialize_training(args, device):
                             batch_size=args.batch_size,
                             collate_fn=tokenizer.pad_batch_to_same_size),
         "val": DataLoader(val_dataset,
-                          batch_size=1,
+                          shuffle=False,
+                          batch_size=args.batch_size,
                           collate_fn=tokenizer.pad_batch_to_same_size)
     }
 
@@ -218,7 +219,7 @@ def get_arguments():
                         help="Path to the JSON files which contain the episode data (the outputs of the spiders).")
 
     # Training and optimization args
-    parser.add_argument("-b", "--batch_size", type=int, required=False, default=4, help="Batch size.")
+    parser.add_argument("-b", "--batch_size", type=int, required=False, default=8, help="Batch size.")
     parser.add_argument("-w", "--weight_decay", type=float, required=False, default=0.01, help="Weight decay.")
     parser.add_argument("-lr", "--learning_rate", type=float, required=False, default=5e-5,
                         help="Initial learning rate.")
