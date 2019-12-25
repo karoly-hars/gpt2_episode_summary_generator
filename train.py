@@ -208,7 +208,7 @@ def get_arguments():
                         help="Describes how to handle training sequences with different lengths.\nOptions:"
                              "\n-'chop_at_sentence_end': Chop long texts to make sure "
                              "that they contain <= words than max_num_words, but only chop at the end of a sentence."
-                             " If that is not possible, return None instead of vectorizing the text."
+                             " If that is not possible, drop data instance, and do not include in during training."
                              "\n-'chop': Chop long texts to make sure that they contain <= words than max_num_words. "
                              "It is okay to chop after any word."
                              "\n-'ignore': Ignore size variance and tokenize all text without chopping."
@@ -224,7 +224,7 @@ def get_arguments():
                         help="Initial learning rate.")
     parser.add_argument("-a", "--adam_epsilon", type=float, required=False, default=1e-8,
                         help="Epsilon param of the Adam optimizer.")
-    parser.add_argument("-ms", "--max_steps", type=int, required=False, default=1e5,
+    parser.add_argument("-ms", "--max_steps", type=int, required=False, default=10000,
                         help="Maximum number of training steps.")
     parser.add_argument("-cs", "--checkpoint_steps", type=int, required=False, default=100,
                         help="Checkpoint frequency during the training process.")
@@ -237,9 +237,9 @@ def get_arguments():
                         help="Save path for the trained model or checkpoints during training.")
 
     # sampling args
-    parser.add_argument("-ns", "--num_samples", type=int, required=False, default=5,
+    parser.add_argument("-ns", "--num_samples", type=int, required=False, default=8,
                         help="Number of samples generated and displayed at every checkpoint.")
-    parser.add_argument("-mg", "--max_gen_length", type=int, required=False, default=192,
+    parser.add_argument("-mg", "--max_gen_len", type=int, required=False, default=192,
                         help="Max length of the generated samples.")
     parser.add_argument("-tk", "--sampling_top_k", type=int, required=False, default=20,
                         help="The number of highest probability vocabulary tokens to keep during top-k-filtering "
