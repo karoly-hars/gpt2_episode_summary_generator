@@ -1,8 +1,7 @@
 import argparse
 import torch
-from dataset import EpisodeSummaryTokenizer
 from utils import set_random_seeds, generate_sequence
-from pytorch_transformers import GPT2Config, GPT2LMHeadModel
+from pytorch_transformers import GPT2Config, GPT2Tokenizer, GPT2LMHeadModel
 
 
 def generate_samples(args):
@@ -13,16 +12,28 @@ def generate_samples(args):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     # Load pre-trained network weights
+    print("Loading pre-trained model...")
     config = GPT2Config.from_pretrained(args.gpt2_version)
     model = GPT2LMHeadModel(config)
     model.load_state_dict(torch.load(args.model_load_path))
     model = model.to(device)
     model.eval()
+    print("Done.\n")
 
     # Create tokenizer
-    tokenizer = EpisodeSummaryTokenizer.from_pretrained(
-        args.gpt2_version, max_num_words=args.max_num_words, size_variance_handling=args.size_var_handling
-    )
+    tokenizer = GPT2Tokenizer.from_pretrained(args.gpt2_version)
+
+    # Generate some samples
+    print("Generating...")
+    generated = generate_sequence(model, tokenizer,
+                                  max_length=args.max_gen_len,
+                                  num_samples=args.num_samples,
+                                  top_k=args.sampling_top_k,
+                                  device=device)
+    print("Generated samples:")
+    print("-" * 41)
+    print(*generated, sep="\n")
+    print("-" * 41)
 
 
 def get_arguments():
