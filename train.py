@@ -126,7 +126,7 @@ def run_training(args):
     # Run training process
     steps = 0
     model.train()
-    print("Running training...")
+    print("\nRunning training:")
 
     while steps < args.max_steps and not train_state['stop_early']:
         model.train()
