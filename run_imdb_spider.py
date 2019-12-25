@@ -20,11 +20,6 @@ def get_arguments():
 if __name__ == "__main__":
     args = get_arguments()
 
-    # remove output file if it already exists
-    if os.path.exists(args.output_path):
-        os.remove(args.output_path)
-
     # call spider
-    call = 'scrapy crawl imdb_episode_summary_spider -a title_keywords="{}" -o {}'.format(' '.join(args.title_keywords),
-                                                                                          args.output_path)
-    os.system(call)
+    call = 'scrapy crawl imdb_episode_summary_spider -a title_keywords="{}" -t json -o - > "{}"'
+    os.system(call.format(' '.join(args.title_keywords), args.output_path))

@@ -12,7 +12,7 @@ def get_arguments():
                              '\nShould be: '
                              'https://en.wikipedia.org/wiki/<Show_Title_With_Underscores_And_Capitalized_Words>'
                              '\nExample: https://en.wikipedia.org/wiki/Star_Trek')
-    parser.add_argument('-a', '--allow', type=str, required=True,
+    parser.add_argument('-u', '--url_keywords', type=str, required=True,
                         help='Wikipedia urls must include this substring otherwise the spider will not enter the URL.'
                              '\nIdeally, it should be: <Show_Title_With_Underscores_And_Capitalized_Words>'
                              '\nExample: \"Star_Trek\"')
@@ -31,14 +31,7 @@ def get_arguments():
 if __name__ == "__main__":
     args = get_arguments()
 
-    # remove output file if it already exists
-    if os.path.exists(args.output_path):
-        os.remove(args.output_path)
-
     # call spider
     call = 'scrapy crawl wiki_episode_table_spider ' \
-           '-a start_url=\"{}\" -a allow=\"{}\" -a title_keywords=\"{}\" -o {}'.format(args.start_url,
-                                                                                       args.allow,
-                                                                                       ' '.join(args.title_keywords),
-                                                                                       args.output_path)
-    os.system(call)
+           '-a start_url=\"{}\" -a allow=\"{}\" -a title_keywords=\"{}\" -t json -o - > "{}"'
+    os.system(call.format(args.start_url, args.url_keywords, ' '.join(args.title_keywords), args.output_path))
