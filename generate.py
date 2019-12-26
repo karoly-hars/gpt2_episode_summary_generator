@@ -31,8 +31,7 @@ def generate_samples(args):
                                   top_k=args.sampling_top_k,
                                   device=device)
     print("Generated samples:")
-    print("---")
-    print(*generated, sep="\n---")
+    print(*generated, sep="\n---\n")
 
 
 def get_arguments():
