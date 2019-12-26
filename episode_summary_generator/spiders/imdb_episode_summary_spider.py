@@ -30,7 +30,7 @@ class ImdbEpisodeSummarySpiderSpider(scrapy.Spider):
             tv_show_title = BeautifulSoup(tv_show_title, "lxml").get_text().strip()
 
             # go into the tv show pages. skip unrelated shows (not containing our keywords), and individual episodes
-            if all([word in tv_show_title.lower() for word in self.title_keywords]) and \
+            if all([word.lower() in tv_show_title.lower() for word in self.title_keywords]) and \
                     "(tv series)" in tv_show_title.lower() and "(tv episode)" not in tv_show_title.lower():
 
                 next_page_url = response.urljoin(tv_show_link)

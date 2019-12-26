@@ -234,7 +234,7 @@ def get_arguments():
                         help="Which GPT2 version to use from pytorch-transformers.")
     parser.add_argument("-e", "--early_stopping_patience", type=int, required=False, default=3,
                         help="Patience before initiating early stopping.")
-    parser.add_argument("-sp", "--model_save_path", type=str, required=False, default="ep_summary_gen_model.pth",
+    parser.add_argument("-mp", "--model_save_path", type=str, required=False, default="ep_summary_gen_model.pth",
                         help="Save path for the trained model or checkpoints during training.")
 
     # sampling args
