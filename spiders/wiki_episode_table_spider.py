@@ -29,12 +29,13 @@ class WikiEpisodeTableSpider(CrawlSpider):
         self.rules = (Rule(LinkExtractor(allow=self.to_allow,
                                          deny=self.to_deny,
                                          allow_domains=self.allowed_domains),
-                           callback='parse_item',
+                           callback='parse',
                            follow=True),)
 
         super(WikiEpisodeTableSpider, self)._compile_rules()
 
-    def parse_item(self, response):
+    def parse(self, response):
+        """Parse and yield all relevant episode data from Wikipedia page."""
         page_header = response.xpath('//title').extract_first()
 
         if page_header and all([keyword in page_header.lower() for keyword in self.title_keywords]):       
@@ -64,6 +65,7 @@ class WikiEpisodeTableSpider(CrawlSpider):
                     yield clean_ep_data(ep_data)
 
     def parse_episode_tables(self, ep_tables):
+        """Collect the data from a Wikipedia episode table into a list of titles and a list of summaries."""
         ep_titles = []
         ep_sums = []
 

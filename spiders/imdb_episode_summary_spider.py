@@ -21,6 +21,7 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
         self.start_urls = ['https://www.imdb.com/find?q={}&s=tt&ref_=fn_al_tt_mr'.format(start_search_url_substring)]
 
     def parse(self, response):
+        """Parse and yield all relevant episode data from an IMDb page."""
         tv_show_links = response.xpath(
             '//table[@class="findList"]/tr[contains(@class, "findResult ")]/td[@class="result_text"]/a/@href'
         ).extract()

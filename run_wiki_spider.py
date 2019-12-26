@@ -4,6 +4,7 @@ from spiders.wiki_episode_table_spider import WikiEpisodeTableSpider
 
 
 def get_arguments():
+    """Parse command line arguments."""
     parser = argparse.ArgumentParser(
         description="Wikipedia episode summary spider.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter

@@ -2,13 +2,16 @@ import re
 
 
 def preprocess_title(text):
+    """Pre-process an episode title string by removing unnecessary quotations, brackets, and whitespaces."""
     text = re.sub('[\(\[].*?[\)\]]', '', text)  # remove brackets
     text = re.sub(' +', ' ', text)  # remove multiple whitespaces
     text = text.strip().strip('\"').strip()  # strip ""s and possible leftover whitespaces
+
     return text
 
 
 def preprocess_summary(text):
+    """Pre-process an episode summary string by removing repeated whitespaces, bracketed text, and citations."""
     text = re.sub('[\(\[].*?[\)\]]', '', text)  # remove brackets
     text = re.sub(' +', ' ', text)  # remove multiple whitespaces
     text = re.sub('\s+\.\s+', '. ',  text)  # removed whitespaces from before dots
@@ -34,9 +37,7 @@ def preprocess_summary(text):
 
 
 def clean_ep_data(ep_data):
-    if ep_data['source_url']:
-        ep_data['source_url'] = ep_data['source_url']
-
+    """Clean the episode data by running some simple cleansing on the titles and the summary."""
     if ep_data['episode_title']:
         ep_data['episode_title'] = preprocess_title(ep_data['episode_title'])
 

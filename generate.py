@@ -5,6 +5,7 @@ from utils.gen_utils import set_random_seeds, generate_sequence
 
 
 def generate_samples(args):
+    """Use a pre-trained GPT-2 model to generate a set of samples from scratch."""
     # Set seed
     set_random_seeds(args.random_seed)
 

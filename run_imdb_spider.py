@@ -4,6 +4,7 @@ from spiders.imdb_episode_summary_spider import ImdbEpisodeSummarySpider
 
 
 def get_arguments():
+    """Parse command line arguments."""
     parser = argparse.ArgumentParser(
         description="IMDb episode summary spider.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
@@ -21,7 +22,7 @@ def get_arguments():
 if __name__ == "__main__":
     args = get_arguments()
 
-    # overwrite output. not too elegant, but there is not better way to do it in Scrapy at the moment.
+    # overwrite output. not too elegant, but there is no better way to do it at the moment.
     with open(args.output_path, "w") as f:
         pass
 
