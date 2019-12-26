@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-from spiders.text_cleansing import clean_ep_data
+from utils.text_cleansing import clean_ep_data
 
 
 class WikiEpisodeTableSpider(CrawlSpider):

@@ -1,6 +1,6 @@
 import scrapy
 from bs4 import BeautifulSoup
-from spiders.text_cleansing import clean_ep_data
+from utils.text_cleansing import clean_ep_data
 
 
 class ImdbEpisodeSummarySpider(scrapy.Spider):
