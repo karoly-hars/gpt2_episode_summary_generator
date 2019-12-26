@@ -2,7 +2,7 @@ import argparse
 import torch
 from torch.utils.data import DataLoader
 from pytorch_transformers import GPT2LMHeadModel, AdamW, WarmupLinearSchedule
-from dataset import EpisodeSummaryTokenizer, create_datasets_from_jsons
+from utils.data import EpisodeSummaryTokenizer, create_datasets_from_jsons
 from utils.gen_utils import set_random_seeds, generate_sequence
 
 
