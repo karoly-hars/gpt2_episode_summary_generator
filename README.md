@@ -1,8 +1,7 @@
 # TV Show Episode Summary Generator
 
-With the code in this repo, it is possible to scrape IMDb and Wikipedia 
-to acquire a large number of episode summaries for a TV show, 
-and to use the data to train a GPT-2 model to generate similar summaries.
+With the code in this repo, it is possible to scrape IMDb and Wikipedia to acquire a large number of episode 
+summaries for a TV show, and to use the data to train a GPT-2 model to generate similar summaries.
 
 
 ## Requirements
@@ -21,10 +20,8 @@ Clone the repo and install the required packages.
 
 ### Running the Scrapy spiders/crawlers
 
-
 ##### Running the IMDb spider
-Running the IMDb spider is fairly simple. It takes two params as input: 
-the path to the output JSON file, and the keywords for the title of the TV show.
+Running the IMDb spider is fairly simple. It only takes a set of keywords as input params: 
 
 Examples:
 
@@ -37,10 +34,9 @@ get the episode data for the show [Walker, Texas Ranger](https://en.wikipedia.or
 
 
 ##### Running the Wikipedia spider
-The Wiki spider is slightly more complicated than the previous one.
-The user have to provide a starting page for the recursive search in Wikipedia,
-plus a string that will be used to filter out URLs 
-(URL that do not contain the substring will not be skipped) and a list of keywords,
+The Wiki spider is slightly more complicated than the previous one. The user have to provide a starting page 
+for the recursive search in Wikipedia, plus a string that will be used to filter out URLs 
+(URLs that do not contain the substring will be skipped) and a list of keywords,
 that will be used to filter out more pages based on the title of the Wikipedia article. 
 
 Examples:
@@ -61,20 +57,17 @@ For additional information, check ```python3 run_imdb_spider -h``` and ```python
 
 
 ### Training the network
-Call ```python3 train.py``` to train a GPT-2 network and save the weights.
-The script splits the data into a training and validation subset. 
-During the training, there is a checkpoint at every X step. At these checkpoints,
-the loss on the validation subset is calculated and a few samples are generated 
-for the user to further monitor the progress.
+Call ```python3 train.py``` to train a GPT-2 network and save the weights. The script splits the data into a training 
+and validation subset. During the training, there is a checkpoint at every X step. At these checkpoints, the loss on 
+the validation subset is calculated and a few samples are generated for the user to further monitor the progress.
 The best model from the training is saved after the process is finished.
 
-The default params were selected based on what worked best for Star Trek episodes,
-so it might be a good idea to play around with the hyper-parameters a little bit
-if you are running the training on a different dataset. Although, in my experience, 
-the results are satisfactory even when training on a different set of data.
+The default params were selected based on what worked best for Star Trek episodes, so it might be a good idea to 
+play around with the hyper-parameters a little bit if you are running the training on a different dataset. 
+Although, in my experience, the results are satisfactory even when training on a different set of data.
 
-I ran my experiments on a GPU with ~16 GB memory. If you do not have the same resources,
-you will probably need to decrease the batch size or select a smaller GPT-2 model.
+I ran my experiments on a GPU with ~16 GB memory. If you do not have the same resources, you will probably need to 
+decrease the batch size or select a smaller GPT-2 model.
 
 Multi-GPU training is currently not implemented.
 
@@ -87,8 +80,8 @@ After you have a trained model, you can generate episodes with
 If you want to play around with other parameters of the generation process, check
 ```python3 generate.py -h```.
 
-If you changed the GPT-2 version from the default ```gpt2-medium``` in the training,
-you will also have to changed it for the generation. 
+If you changed the GPT-2 version from the default ```gpt2-medium``` in the training, you will also have to changed 
+it for the generation. 
 
 Example output for Star Trek:
 ```
@@ -161,5 +154,5 @@ Walker's mother, who works as a nursing home social worker, is killed by a homel
 ```
 
 ## Acknowledgments
-Some functions/snippets in my code were copied from https://github.com/huggingface/transformers
+Some functions and code snippets were copied from https://github.com/huggingface/transformers
  
