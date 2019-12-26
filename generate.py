@@ -1,6 +1,6 @@
 import argparse
 import torch
-from utils import set_random_seeds, generate_sequence
+from nlp_utils import set_random_seeds, generate_sequence
 from pytorch_transformers import GPT2Config, GPT2Tokenizer, GPT2LMHeadModel
 
 

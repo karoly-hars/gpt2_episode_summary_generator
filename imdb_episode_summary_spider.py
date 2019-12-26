@@ -1,14 +1,17 @@
-# -*- coding: utf-8 -*-
 import scrapy
 from bs4 import BeautifulSoup
-from scrapy.loader import ItemLoader
-from episode_summary_generator.items import EpisodeSummaryGeneratorItem
+from scraping_utils import clean_ep_data
 
 
 class ImdbEpisodeSummarySpider(scrapy.Spider):
     name = 'imdb_episode_summary_spider'
 
     allowed_domains = ['www.imdb.com']
+
+    # set obey robots to True for Wikipedia
+    custom_settings = {
+        "ROBOTSTXT_OBEY": False,
+    }
 
     def __init__(self, title_keywords='', *args, **kwargs):
         super(ImdbEpisodeSummarySpider, self).__init__(*args, **kwargs)
@@ -77,9 +80,11 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
             ep_sum = BeautifulSoup(ep_sum, "lxml").get_text().strip()
 
             if "be the first to contribute" not in ep_sum.lower():
-                loader = ItemLoader(item=EpisodeSummaryGeneratorItem())
-                loader.add_value("source_url", response.url)
-                loader.add_value("episode_title", ep_title)
-                loader.add_value("episode_summary", ep_sum)
-                loader.add_value("tv_show_title", show_title)
-                yield loader.load_item()
+                ep_data = {
+                    "source_url": response.url,
+                    "episode_title": ep_title,
+                    "episode_summary": ep_sum,
+                    "tv_show_title": show_title,
+                }
+
+                yield clean_ep_data(ep_data)

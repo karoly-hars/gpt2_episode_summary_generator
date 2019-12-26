@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-from scrapy.loader import ItemLoader
-from episode_summary_generator.items import EpisodeSummaryGeneratorItem
+from scraping_utils import clean_ep_data
 
 
 class WikiEpisodeTableSpider(CrawlSpider):
     name = 'wiki_episode_table_spider'
+
+    allowed_domains = ['en.wikipedia.org']
 
     # set obey robots to True for Wikipedia
     custom_settings = {
@@ -17,7 +17,6 @@ class WikiEpisodeTableSpider(CrawlSpider):
     def __init__(self, start_url, allow, title_keywords='', *args, **kwargs):
         super(WikiEpisodeTableSpider, self).__init__(*args, **kwargs)
 
-        self.allowed_domains = ['en.wikipedia.org']
         self.start_urls = [start_url]
         self.to_allow = allow
         self.title_keywords = [word.lower() for word in title_keywords.strip().split()]
@@ -56,14 +55,14 @@ class WikiEpisodeTableSpider(CrawlSpider):
                     self.num_episodes += len(ep_sums)
                     self.unique_episode_summaries.add(ep_sum)
 
-                    loader = ItemLoader(item=EpisodeSummaryGeneratorItem())
-                    loader.add_value("source_url", response.url)
-                    loader.add_value("episode_title", ep_title)
-                    loader.add_value("episode_summary", ep_sum)
-                    # in this case, the show title can be None, since it derivable from the url
-                    loader.add_value("tv_show_title", "")
+                    ep_data = {
+                        "source_url": response.url,
+                        "episode_title": ep_title,
+                        "episode_summary": ep_sum,
+                        "tv_show_title": "",
+                    }
 
-                    yield loader.load_item()
+                    yield clean_ep_data(ep_data)
 
     def parse_episode_tables(self, ep_tables):
         ep_titles = []
