@@ -5,13 +5,13 @@ from scrapy.loader import ItemLoader
 from episode_summary_generator.items import EpisodeSummaryGeneratorItem
 
 
-class ImdbEpisodeSummarySpiderSpider(scrapy.Spider):
+class ImdbEpisodeSummarySpider(scrapy.Spider):
     name = 'imdb_episode_summary_spider'
 
     allowed_domains = ['www.imdb.com']
 
     def __init__(self, title_keywords='', *args, **kwargs):
-        super(ImdbEpisodeSummarySpiderSpider, self).__init__(*args, **kwargs)
+        super(ImdbEpisodeSummarySpider, self).__init__(*args, **kwargs)
 
         self.title_keywords = [word.lower() for word in title_keywords.strip().split()]
         start_search_url_substring = '+'.join(self.title_keywords)
