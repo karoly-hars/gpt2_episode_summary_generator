@@ -1,25 +1,28 @@
 from bs4 import BeautifulSoup
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-from text_cleansing import clean_ep_data
+from spiders.text_cleansing import clean_ep_data
 
 
 class WikiEpisodeTableSpider(CrawlSpider):
 
     name = 'wiki_episode_table_spider'
 
-    def __init__(self, start_url, allow, title_keywords='', *args, **kwargs):
+    custom_settings = {
+        "ROBOTSTXT_OBEY": True,
+    }
+
+    def __init__(self, start_url, allow, title_keywords=[], *args, **kwargs):
         super(WikiEpisodeTableSpider, self).__init__(*args, **kwargs)
 
         self.allowed_domains = ['en.wikipedia.org']
-        self.to_deny = ["/Talk:", "/Wikipedia_talk:", "/Category:", "/Wikipedia:", "/Template:"]
-        self.custom_settings = {
-            "ROBOTSTXT_OBEY": True,
-        }
+        self.to_deny = [
+            "/Talk:", "/Wikipedia_talk:", "/Category:", "/Wikipedia:", "/Template:"
+        ]
 
         self.start_urls = [start_url]
         self.to_allow = allow
-        self.title_keywords = [word.lower() for word in title_keywords.strip().split()]
+        self.title_keywords = [word.lower() for word in title_keywords]
         self.unique_episode_summaries = set()
 
         # set rules

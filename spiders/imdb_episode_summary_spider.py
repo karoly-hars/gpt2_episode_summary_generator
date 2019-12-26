@@ -1,21 +1,22 @@
 import scrapy
 from bs4 import BeautifulSoup
-from text_cleansing import clean_ep_data
+from spiders.text_cleansing import clean_ep_data
 
 
 class ImdbEpisodeSummarySpider(scrapy.Spider):
 
     name = 'imdb_episode_summary_spider'
 
+    custom_settings = {
+        "ROBOTSTXT_OBEY": False,
+    }
+
     def __init__(self, title_keywords='', *args, **kwargs):
         super(ImdbEpisodeSummarySpider, self).__init__(*args, **kwargs)
 
         self.allowed_domains = ['www.imdb.com']
-        self.custom_settings = {
-            "ROBOTSTXT_OBEY": False,
-        }
 
-        self.title_keywords = [word.lower() for word in title_keywords.strip().split()]
+        self.title_keywords = [word.lower() for word in title_keywords]
         start_search_url_substring = '+'.join(self.title_keywords)
         self.start_urls = ['https://www.imdb.com/find?q={}&s=tt&ref_=fn_al_tt_mr'.format(start_search_url_substring)]
 

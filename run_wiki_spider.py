@@ -1,5 +1,6 @@
-import os
 import argparse
+from scrapy.crawler import CrawlerProcess
+from spiders.wiki_episode_table_spider import WikiEpisodeTableSpider
 
 
 def get_arguments():
@@ -31,7 +32,16 @@ def get_arguments():
 if __name__ == "__main__":
     args = get_arguments()
 
-    # call spider
-    call = 'scrapy runspider spiders/wiki_episode_table_spider.py ' \
-           '-a start_url=\"{}\" -a allow=\"{}\" -a title_keywords=\"{}\" -t json -o - > "{}"'
-    os.system(call.format(args.start_url, args.url_substring, ' '.join(args.title_keywords), args.output_path))
+    # overwrite output
+    with open(args.output_path, "w") as f:
+        pass
+
+    # run spider
+    process = CrawlerProcess(settings={
+        'FEED_FORMAT': 'json',
+        'FEED_URI': args.output_path
+    })
+    process.crawl(
+        WikiEpisodeTableSpider, start_url=args.start_url, allow=args.url_substring, title_keywords=args.title_keywords
+    )
+    process.start()

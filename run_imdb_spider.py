@@ -1,5 +1,6 @@
-import os
 import argparse
+from scrapy.crawler import CrawlerProcess
+from spiders.imdb_episode_summary_spider import ImdbEpisodeSummarySpider
 
 
 def get_arguments():
@@ -20,6 +21,14 @@ def get_arguments():
 if __name__ == "__main__":
     args = get_arguments()
 
-    # call spider
-    call = 'scrapy runspider spiders/imdb_episode_summary_spider.py -a title_keywords="{}" -t json -o - > "{}"'
-    os.system(call.format(' '.join(args.title_keywords), args.output_path))
+    # overwrite output. not too elegant, but there is not better way to do it in Scrapy at the moment.
+    with open(args.output_path, "w") as f:
+        pass
+
+    # run spider
+    process = CrawlerProcess(settings={
+        'FEED_FORMAT': 'json',
+        'FEED_URI': args.output_path,
+    })
+    process.crawl(ImdbEpisodeSummarySpider, title_keywords=args.title_keywords)
+    process.start()
