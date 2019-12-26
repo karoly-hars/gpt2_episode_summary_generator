@@ -2,7 +2,7 @@
 
 With the code in this repo, it is possible to scrape IMDb and Wikipedia to acquire a large number of episode 
 summaries for a TV show, and to use the data to train a GPT-2 model to generate similar summaries. Due to the lack of 
-large-scale datasets, the generated results are usually far from perfect, but they are grammatically correct thanks to
+large-scale datasets, the generated summaries are usually far from perfect, but they are grammatically correct thanks to
 the pre-training of the GPT-2 networks, and they are fun to read.
 
 
