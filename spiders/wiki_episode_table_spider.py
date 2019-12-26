@@ -1,28 +1,25 @@
 from bs4 import BeautifulSoup
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-from scraping_utils import clean_ep_data
+from text_cleansing import clean_ep_data
 
 
 class WikiEpisodeTableSpider(CrawlSpider):
+
     name = 'wiki_episode_table_spider'
 
-    allowed_domains = ['en.wikipedia.org']
-
-    # set obey robots to True for Wikipedia
-    custom_settings = {
-        "ROBOTSTXT_OBEY": True,
-    }
-    
     def __init__(self, start_url, allow, title_keywords='', *args, **kwargs):
         super(WikiEpisodeTableSpider, self).__init__(*args, **kwargs)
+
+        self.allowed_domains = ['en.wikipedia.org']
+        self.to_deny = ["/Talk:", "/Wikipedia_talk:", "/Category:", "/Wikipedia:", "/Template:"]
+        self.custom_settings = {
+            "ROBOTSTXT_OBEY": True,
+        }
 
         self.start_urls = [start_url]
         self.to_allow = allow
         self.title_keywords = [word.lower() for word in title_keywords.strip().split()]
-        self.to_deny = ["/Talk:", "/Wikipedia_talk:", "/Category:", "/Wikipedia:", "/Template:"]
-
-        self.num_episodes = 0
         self.unique_episode_summaries = set()
 
         # set rules
@@ -52,7 +49,6 @@ class WikiEpisodeTableSpider(CrawlSpider):
             # parse unique items
             for ep_title, ep_sum in zip(ep_titles, ep_sums):
                 if ep_sum not in self.unique_episode_summaries:
-                    self.num_episodes += len(ep_sums)
                     self.unique_episode_summaries.add(ep_sum)
 
                     ep_data = {
