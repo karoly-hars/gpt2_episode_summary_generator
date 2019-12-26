@@ -195,7 +195,7 @@ def run_training(args):
 def get_arguments():
     """Collect command line arguments."""
     parser = argparse.ArgumentParser(
-        description="GPT-2 model traning for text generation.",
+        description="GPT-2 model training for text generation.",
         formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=75)
     )
     # Args related to the data

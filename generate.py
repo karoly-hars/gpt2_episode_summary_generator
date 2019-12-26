@@ -39,7 +39,7 @@ def generate_samples(args):
 def get_arguments():
     """Collect command line arguments."""
     parser = argparse.ArgumentParser(
-        description="GPT-2 model traning for text generation.",
+        description="Generate TV show episode summaries with a GPT-2 model pretrained for this purpose.",
         formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=75)
     )
 
