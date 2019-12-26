@@ -5,12 +5,12 @@ import argparse
 def get_arguments():
     parser = argparse.ArgumentParser(
         description="IMDb episode summary spider.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=75)
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
-    parser.add_argument('-t', '--title_keywords', nargs='*',
+    parser.add_argument('-t', '--title_keywords', nargs='*', required=True,
                         help='Keywords from the TV show title. '
                              'Ideally they should be lowercase and whitspace separated.'
-                             '\nExamples: \"star trek\" or \"rick and morty\"')
+                             'Examples: \"star trek\" or \"rick and morty\"')
     parser.add_argument('-o', '--output_path', type=str, required=False, default='imdb_episode_summaries.json',
                         help='Path to the output JSON file. If the file already exists, it will be overwritten.')
     args = parser.parse_args()

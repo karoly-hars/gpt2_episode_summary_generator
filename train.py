@@ -196,7 +196,7 @@ def get_arguments():
     """Collect command line arguments."""
     parser = argparse.ArgumentParser(
         description="GPT-2 model training for text generation.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=75)
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     # Args related to the data
     parser.add_argument("-s", "--random_seed", type=int, required=False, default=99, help="Random seed.")
@@ -206,13 +206,13 @@ def get_arguments():
                         help="Maximum number of words per summary in the training set.")
     parser.add_argument("-sv", "--size_var_handling", type=str, required=False,
                         default="chop_at_sentence_end", choices=["chop_at_sentence_end", "chop", "ignore"],
-                        help="Describes how to handle training sequences with different lengths.\nOptions:"
-                             "\n-'chop_at_sentence_end': Chop long texts to make sure "
+                        help="Describes how to handle training sequences with different lengths. Options:"
+                             " -'chop_at_sentence_end': Chop long texts to make sure "
                              "that they contain <= words than max_num_words, but only chop at the end of a sentence."
                              " If that is not possible, drop data instance, and do not include in during training."
-                             "\n-'chop': Chop long texts to make sure that they contain <= words than max_num_words. "
+                             " -'chop': Chop long texts to make sure that they contain <= words than max_num_words. "
                              "It is okay to chop after any word."
-                             "\n-'ignore': Ignore size variance and tokenize all text without chopping."
+                             " -'ignore': Ignore size variance and tokenize all text without chopping."
                              "In this case, max_num_words has no effect.")
     parser.add_argument('-j', '--json_paths', nargs='*', required=False,
                         default=["wiki_episode_summaries.json", "imdb_episode_summaries.json"],

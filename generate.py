@@ -37,8 +37,8 @@ def generate_samples(args):
 def get_arguments():
     """Collect command line arguments."""
     parser = argparse.ArgumentParser(
-        description="Generate TV show episode summaries with a GPT-2 model pretrained for this purpose.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=75)
+        description="Load a pre-trained GPT-2 model and generate TV show episode summaries.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
 
     parser.add_argument("-s", "--random_seed", type=int, required=False, default=99, help="Random seed.")
