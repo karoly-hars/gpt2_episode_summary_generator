@@ -1,7 +1,7 @@
 import argparse
 import torch
-from nlp_utils import set_random_seeds, generate_sequence
 from pytorch_transformers import GPT2Config, GPT2Tokenizer, GPT2LMHeadModel
+from gen_utils import set_random_seeds, generate_sequence
 
 
 def generate_samples(args):

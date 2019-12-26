@@ -32,6 +32,6 @@ if __name__ == "__main__":
     args = get_arguments()
 
     # call spider
-    call = 'scrapy runspider wiki_episode_table_spider.py ' \
+    call = 'scrapy runspider spiders/wiki_episode_table_spider.py ' \
            '-a start_url=\"{}\" -a allow=\"{}\" -a title_keywords=\"{}\" -t json -o - > "{}"'
     os.system(call.format(args.start_url, args.url_substring, ' '.join(args.title_keywords), args.output_path))

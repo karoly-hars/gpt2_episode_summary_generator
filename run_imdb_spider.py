@@ -21,5 +21,5 @@ if __name__ == "__main__":
     args = get_arguments()
 
     # call spider
-    call = 'scrapy runspider imdb_episode_summary_spider.py -a title_keywords="{}" -t json -o - > "{}"'
+    call = 'scrapy runspider spiders/imdb_episode_summary_spider.py -a title_keywords="{}" -t json -o - > "{}"'
     os.system(call.format(' '.join(args.title_keywords), args.output_path))
