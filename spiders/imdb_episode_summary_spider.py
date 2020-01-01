@@ -6,10 +6,7 @@ from utils.text_cleansing import clean_ep_data
 class ImdbEpisodeSummarySpider(scrapy.Spider):
 
     name = 'imdb_episode_summary_spider'
-
-    custom_settings = {
-        "ROBOTSTXT_OBEY": False,
-    }
+    custom_settings = {'ROBOTSTXT_OBEY': False}
 
     def __init__(self, title_keywords='', *args, **kwargs):
         super(ImdbEpisodeSummarySpider, self).__init__(*args, **kwargs)
@@ -31,11 +28,11 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
         ).extract()
 
         for tv_show_title, tv_show_link in zip(tv_show_titles, tv_show_links):
-            tv_show_title = BeautifulSoup(tv_show_title, "lxml").get_text().strip()
+            tv_show_title = BeautifulSoup(tv_show_title, 'lxml').get_text().strip()
 
             # go into the tv show pages. skip unrelated shows (not containing our keywords), and individual episodes
             if all([word.lower() in tv_show_title.lower() for word in self.title_keywords]) and \
-                    "(tv series)" in tv_show_title.lower() and "(tv episode)" not in tv_show_title.lower():
+                    '(tv series)' in tv_show_title.lower() and '(tv episode)' not in tv_show_title.lower():
 
                 next_page_url = response.urljoin(tv_show_link)
                 yield scrapy.Request(url=next_page_url, callback=self.parse_tv_show_page)
@@ -57,7 +54,7 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
                         '//div[@id="title-episode-widget"]/div[@class="seasons-and-year-nav"]/div/a/@href'
                     ).extract()
 
-                    episode_list_urls = [response.urljoin(e) for e in episode_list_urls if "season" in e]
+                    episode_list_urls = [response.urljoin(e) for e in episode_list_urls if 'season' in e]
 
                     for url in episode_list_urls:
                         yield scrapy.Request(url, callback=self.parse_episode_list)
@@ -66,7 +63,7 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
         """Look up the episode urls."""
         episode_list = response.xpath('//div[@class="list detail eplist"]')
         episode_page_urls = episode_list.xpath('//div[@class="info"]/strong/a/@href').extract()
-        episode_page_urls = ["https://www.imdb.com{}plotsummary".format(e) for e in episode_page_urls]
+        episode_page_urls = ['https://www.imdb.com{}plotsummary'.format(e) for e in episode_page_urls]
 
         for url in episode_page_urls:
             yield scrapy.Request(url, callback=self.parse_plot_summary_page)
@@ -78,14 +75,14 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
         summaries = response.xpath('//ul[@id="plot-summaries-content"]/li[@class="ipl-zebra-list__item"]/p').extract()
 
         for ep_sum in summaries:
-            ep_sum = BeautifulSoup(ep_sum, "lxml").get_text().strip()
+            ep_sum = BeautifulSoup(ep_sum, 'lxml').get_text().strip()
 
-            if "be the first to contribute" not in ep_sum.lower():
+            if 'be the first to contribute' not in ep_sum.lower():
                 ep_data = {
-                    "source_url": response.url,
-                    "episode_title": ep_title,
-                    "episode_summary": ep_sum,
-                    "tv_show_title": show_title,
+                    'source_url': response.url,
+                    'episode_title': ep_title,
+                    'episode_summary': ep_sum,
+                    'tv_show_title': show_title,
                 }
 
                 yield clean_ep_data(ep_data)

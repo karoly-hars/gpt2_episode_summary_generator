@@ -16,22 +16,18 @@ def preprocess_summary(text):
     text = re.sub(' +', ' ', text)  # remove multiple whitespaces
     text = re.sub('\s+\.\s+', '. ',  text)  # removed whitespaces from before dots
 
-    # wiki summaries as sometimes structured like this:
-    # "Some actual episode summary bla bla...
-    # \n\n
-    # Some "fun" fact about the directory or the actors or some note from the writer."
-    # Obviously we want to get rid of the part after the \n-s
-    text = text.split("\n")[0]
+    # We want to get rid of the part after the first '\n' for summaries with multiple paragraphs
+    text = text.split('\n')[0]
 
     # make sure the last sentence ends with '.', '!', or '?', if there is a half finished sentence that is usually a
     # citation or reference on Wikipedia
-    if not (text.endswith(".") or text.endswith("?") or text.endswith("!")):
+    if not (text.endswith('.') or text.endswith('?') or text.endswith('!')):
         last_closing = max([text.rfind('.'), text.rfind('?'), text.rfind('!')])
         if last_closing > 0:
             text = text[:last_closing+1]
 
-    if text.endswith(" ."):
-        text = text[:-2]+"."
+    if text.endswith(' .'):
+        text = text[:-2]+'.'
 
     return text
 

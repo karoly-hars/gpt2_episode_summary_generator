@@ -6,7 +6,7 @@ from spiders.wiki_episode_table_spider import WikiEpisodeTableSpider
 def get_arguments():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
-        description="Wikipedia episode summary spider.",
+        description='Wikipedia episode summary spider.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     parser.add_argument('-s', '--start_url', type=str, required=True,
@@ -20,9 +20,9 @@ def get_arguments():
                              '<Show_Title_With_Underscores_And_Capitalized_Words>. Example: \"Star_Trek\"')
     parser.add_argument('-t', '--title_keywords', nargs='*', required=True,
                         help='The title of the Wikipedia page must include these keywords, '
-                             'otherwise the spider will not extract anything from the page.'
-                             ' Good practice: use the lowercase version of the words from the show\'s title'
-                             ' Example: star trek')
+                             'otherwise the spider will not extract anything from the page. '
+                             'Good practice: use the lowercase version of the words from the show\'s title '
+                             'Example: star trek')
     parser.add_argument('-o', '--output_path', type=str, required=False, default='wiki_episode_summaries.json',
                         help='Path to the output JSON file. If the file already exists, it will be overwritten.')
 
@@ -30,11 +30,11 @@ def get_arguments():
     return args
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     args = get_arguments()
 
     # overwrite output
-    with open(args.output_path, "w") as f:
+    with open(args.output_path, 'w') as f:
         pass
 
     # run spider
