@@ -24,7 +24,7 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
     """
 
     def __init__(self, vocab_file, merges_file, max_num_words, size_variance_handling, errors='replace',
-                 unk_token="<|endoftext|>", bos_token="<|endoftext|>", eos_token="<|endoftext|>", **kwargs):
+                 unk_token='<|endoftext|>', bos_token='<|endoftext|>', eos_token='<|endoftext|>', **kwargs):
 
         super(EpisodeSummaryTokenizer, self).__init__(
             vocab_file, merges_file, errors, unk_token, bos_token, eos_token, **kwargs
@@ -34,9 +34,9 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
 
         # select how we handle sequences with different sizes
         self._look_up_dict = {
-            "chop_at_sentence_end": self._chop_text_at_sentence_end,
-            "chop": self._chop_text,
-            "ignore": lambda x: x
+            'chop_at_sentence_end': self._chop_text_at_sentence_end,
+            'chop': self._chop_text,
+            'ignore': lambda x: x
         }
         self.size_var_handling_fnc = self._look_up_dict[size_variance_handling]
 
@@ -53,7 +53,7 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
         if not text:
             return None
 
-        tokenized_text = self.convert_tokens_to_ids(self.tokenize("<|endoftext|> {} <|endoftext|>".format(text)))
+        tokenized_text = self.convert_tokens_to_ids(self.tokenize('<|endoftext|> {} <|endoftext|>'.format(text)))
         return tokenized_text
 
     @staticmethod
@@ -76,10 +76,10 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
                  'div.', 'est.', 'Cpl.', 'Corp.', 'Col.', 'Comdr.', 'Ave.',
                  'St.', 'Ser.', 'mt.', 'mts.', 'Assn.', 'Cdr.']
 
-        if word.endswith('?') or word.endswith("!"):
+        if word.endswith('?') or word.endswith('!'):
             return True
 
-        if word.endswith("."):
+        if word.endswith('.'):
             # if it is a standalone "." character return True,
             # however this should not happen based on the previous processing steps
             if len(word) < 2:
@@ -153,7 +153,7 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
 
         for tokenized_text in batch:
             tokenized_text = tokenized_text + self.convert_tokens_to_ids(
-                self.tokenize(" <|endoftext|>" * (block_size - len(tokenized_text)))
+                self.tokenize(' <|endoftext|>' * (block_size - len(tokenized_text)))
             )
             padded_batch.append(tokenized_text)
 
@@ -188,14 +188,14 @@ def create_datasets_from_jsons(json_file_paths, tokenizer, val_split_ratio):
     :return: Tuple of EpisodeSummaryDataset objects (train and val datasets)
     """
 
-    print("Creating datasets:")
+    print('Creating datasets:')
     episode_summaries = []
     for json_file_path in json_file_paths:
         with open(json_file_path, "r") as f:
             json_data = json.load(f)
 
         for ep_data in json_data:
-            episode_summaries.append(ep_data["episode_summary"])
+            episode_summaries.append(ep_data['episode_summary'])
 
     episode_summaries.sort()
 
@@ -206,7 +206,7 @@ def create_datasets_from_jsons(json_file_paths, tokenizer, val_split_ratio):
         if tokenized_summary:
             tokenized_summaries.append(tokenized_summary)
 
-    print("  Dropped {}/{} episode summaries during vectorization.".format(
+    print('  Dropped {}/{} episode summaries during vectorization.'.format(
         len(episode_summaries) - len(tokenized_summaries), len(episode_summaries)
     ))
 
@@ -218,6 +218,6 @@ def create_datasets_from_jsons(json_file_paths, tokenizer, val_split_ratio):
 
     train_dataset = EpisodeSummaryDataset(train_ep_sums)
     val_dataset = EpisodeSummaryDataset(val_ep_sums)
-    print("  Training set size: {}\n  Validation set size: {}".format(len(train_dataset), len(val_dataset)))
+    print('  Training set size: {}\n  Validation set size: {}'.format(len(train_dataset), len(val_dataset)))
 
     return train_dataset, val_dataset

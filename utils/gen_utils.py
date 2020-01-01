@@ -65,7 +65,7 @@ def generate_sequence(model, tokenizer, max_length, context=None, num_samples=1,
     """
     # pre-process context
     if context is None:
-        context = tokenizer._convert_token_to_id("<|endoftext|>")
+        context = tokenizer._convert_token_to_id('<|endoftext|>')
     context = torch.tensor(context, dtype=torch.long, device=device)
     context = context.unsqueeze(0).repeat(num_samples, 1)
 
@@ -95,6 +95,6 @@ def generate_sequence(model, tokenizer, max_length, context=None, num_samples=1,
                 break
 
     # convert the generated ids to text
-    generated = [tokenizer.decode(gen_ids.cpu().numpy()).replace("<|endoftext|>", "").strip() for gen_ids in generated]
+    generated = [tokenizer.decode(gen_ids.cpu().numpy()).replace('<|endoftext|>', '').strip() for gen_ids in generated]
 
     return generated

@@ -68,11 +68,11 @@ def initialize_training(args, device):
     train_dataset, val_dataset = create_datasets_from_jsons(args.json_paths, tokenizer, args.val_split)
 
     dataloaders = {
-        "train": DataLoader(train_dataset,
+        'train': DataLoader(train_dataset,
                             shuffle=True,
                             batch_size=args.batch_size,
                             collate_fn=tokenizer.pad_batch_to_same_size),
-        "val": DataLoader(val_dataset,
+        'val': DataLoader(val_dataset,
                           shuffle=False,
                           batch_size=args.batch_size,
                           collate_fn=tokenizer.pad_batch_to_same_size)
@@ -120,13 +120,13 @@ def run_training(args):
     set_random_seeds(args.random_seed)
 
     # Initialize training
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     tokenizer, dataloaders, model, optimizer, scheduler, train_state = initialize_training(args, device)
 
     # Run training process
     steps = 0
     model.train()
-    print("\nRunning training:")
+    print('\nRunning training:')
 
     while steps < args.max_steps and not train_state['stop_early']:
         model.train()
@@ -136,7 +136,7 @@ def run_training(args):
         running_val_loss = 0
         num_val_samples = 0
 
-        for train_batch in dataloaders["train"]:
+        for train_batch in dataloaders['train']:
             optimizer.zero_grad()
 
             loss, logits = forward_batch(model, train_batch, device)
@@ -155,7 +155,7 @@ def run_training(args):
             if steps > 0 and steps % args.checkpoint_steps == 0:
                 model.eval()
 
-                for val_batch in dataloaders["val"]:
+                for val_batch in dataloaders['val']:
                     loss, logits = forward_batch(model, val_batch, device)
 
                     running_val_loss += loss.item()
@@ -165,8 +165,8 @@ def run_training(args):
                                                  running_train_loss / num_train_samples,
                                                  running_val_loss / num_val_samples)
 
-                print("\n============== {} / {} ==============".format(steps, args.max_steps))
-                print("train loss: {:.4f} | val loss: {:.4f}".format(train_state['train_loss'][-1],
+                print('\n============== {} / {} =============='.format(steps, args.max_steps))
+                print('train loss: {:.4f} | val loss: {:.4f}'.format(train_state['train_loss'][-1],
                                                                      train_state['val_loss'][-1]))
                 # generate some samples
                 generated = generate_sequence(model, tokenizer,
@@ -174,14 +174,14 @@ def run_training(args):
                                               num_samples=args.num_samples,
                                               top_k=args.sampling_top_k,
                                               device=device)
-                print("-" * 41)
-                print(*generated, sep="\n")
-                print("-" * 41)
+                print('-' * 41)
+                print(*generated, sep='\n')
+                print('-' * 41)
 
                 # check for early stopping
                 if train_state['stop_early']:
-                    print("\nTraining finished with early stopping.")
-                    print("best loss: {:.4f}".format(train_state['min_val_loss']))
+                    print('\nTraining finished with early stopping.')
+                    print('best loss: {:.4f}'.format(train_state['min_val_loss']))
                     break
 
                 # reset sums and set model back to train
@@ -195,61 +195,61 @@ def run_training(args):
 def get_arguments():
     """Collect command line arguments."""
     parser = argparse.ArgumentParser(
-        description="GPT-2 model training for text generation.",
+        description='GPT-2 model training for text generation.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     # Args related to the data
-    parser.add_argument("-s", "--random_seed", type=int, required=False, default=99, help="Random seed.")
-    parser.add_argument("-v", "--val_split", type=float, required=False, default=0.1,
-                        help="Ratio of the validation subset size compared to all available data.")
-    parser.add_argument("-m", "--max_num_words", type=int, required=False, default=96,
-                        help="Maximum number of words per summary in the training set.")
-    parser.add_argument("-sv", "--size_var_handling", type=str, required=False,
-                        default="chop_at_sentence_end", choices=["chop_at_sentence_end", "chop", "ignore"],
-                        help="Describes how to handle training sequences with different lengths. Options:"
-                             " -'chop_at_sentence_end': Chop long texts to make sure "
-                             "that they contain <= words than max_num_words, but only chop at the end of a sentence."
-                             " If that is not possible, drop data instance, and do not include in during training."
-                             " -'chop': Chop long texts to make sure that they contain <= words than max_num_words. "
-                             "It is okay to chop after any word."
-                             " -'ignore': Ignore size variance and tokenize all text without chopping."
-                             "In this case, max_num_words has no effect.")
+    parser.add_argument('-s', '--random_seed', type=int, required=False, default=99, help='Random seed.')
+    parser.add_argument('-v', '--val_split', type=float, required=False, default=0.1,
+                        help='Ratio of the validation subset size compared to all available data.')
+    parser.add_argument('-m', '--max_num_words', type=int, required=False, default=96,
+                        help='Maximum number of words per summary in the training set.')
+    parser.add_argument('-sv', '--size_var_handling', type=str, required=False,
+                        default='chop_at_sentence_end', choices=['chop_at_sentence_end', 'chop', 'ignore'],
+                        help='Describes how to handle training sequences with different lengths. Options:'
+                             ' -"chop_at_sentence_end": Chop long texts to make sure '
+                             'that they contain <= words than max_num_words, but only chop at the end of a sentence.'
+                             ' If that is not possible, drop data instance, and do not include in during training.'
+                             ' -"chop": Chop long texts to make sure that they contain <= words than max_num_words. '
+                             'It is okay to chop after any word.'
+                             ' -"ignore": Ignore size variance and tokenize all text without chopping.'
+                             'In this case, max_num_words has no effect.')
     parser.add_argument('-j', '--json_paths', nargs='*', required=False,
-                        default=["wiki_episode_summaries.json", "imdb_episode_summaries.json"],
-                        help="Path to the JSON files which contain the episode data (the outputs of the spiders).")
+                        default=['wiki_episode_summaries.json', 'imdb_episode_summaries.json'],
+                        help='Path to the JSON files which contain the episode data (the outputs of the spiders).')
 
     # Training and optimization args
-    parser.add_argument("-b", "--batch_size", type=int, required=False, default=8, help="Batch size.")
-    parser.add_argument("-w", "--weight_decay", type=float, required=False, default=0.01, help="Weight decay.")
-    parser.add_argument("-lr", "--learning_rate", type=float, required=False, default=5e-5,
-                        help="Initial learning rate.")
-    parser.add_argument("-a", "--adam_epsilon", type=float, required=False, default=1e-8,
-                        help="Epsilon param of the Adam optimizer.")
-    parser.add_argument("-ms", "--max_steps", type=int, required=False, default=10000,
-                        help="Maximum number of training steps.")
-    parser.add_argument("-cs", "--checkpoint_steps", type=int, required=False, default=100,
-                        help="Checkpoint frequency during the training process.")
-    parser.add_argument("-g", "--gpt2_version", type=str, required=False, default="gpt2-medium",
-                        choices=["gpt2, gpt2-medium", "gpt2-large"],
-                        help="Which GPT2 version to use from pytorch-transformers.")
-    parser.add_argument("-e", "--early_stopping_patience", type=int, required=False, default=3,
-                        help="Patience before initiating early stopping.")
-    parser.add_argument("-mp", "--model_save_path", type=str, required=False, default="ep_summary_gen_model.pth",
-                        help="Save path for the trained model or checkpoints during training.")
+    parser.add_argument('-b', '--batch_size', type=int, required=False, default=8, help='Batch size.')
+    parser.add_argument('-w', '--weight_decay', type=float, required=False, default=0.01, help='Weight decay.')
+    parser.add_argument('-lr', '--learning_rate', type=float, required=False, default=5e-5,
+                        help='Initial learning rate.')
+    parser.add_argument('-a', '--adam_epsilon', type=float, required=False, default=1e-8,
+                        help='Epsilon param of the Adam optimizer.')
+    parser.add_argument('-ms', '--max_steps', type=int, required=False, default=10000,
+                        help='Maximum number of training steps.')
+    parser.add_argument('-cs', '--checkpoint_steps', type=int, required=False, default=100,
+                        help='Checkpoint frequency during the training process.')
+    parser.add_argument('-g', '--gpt2_version', type=str, required=False, default='gpt2-medium',
+                        choices=['gpt2, gpt2-medium', 'gpt2-large'],
+                        help='Which GPT2 version to use from pytorch-transformers.')
+    parser.add_argument('-e', '--early_stopping_patience', type=int, required=False, default=3,
+                        help='Patience before initiating early stopping.')
+    parser.add_argument('-mp', '--model_save_path', type=str, required=False, default='ep_summary_gen_model.pth',
+                        help='Save path for the trained model or checkpoints during training.')
 
     # sampling args
-    parser.add_argument("-ns", "--num_samples", type=int, required=False, default=8,
-                        help="Number of samples generated and displayed at every checkpoint.")
-    parser.add_argument("-mg", "--max_gen_len", type=int, required=False, default=192,
-                        help="Max length of the generated samples.")
-    parser.add_argument("-tk", "--sampling_top_k", type=int, required=False, default=20,
-                        help="The number of highest probability vocabulary tokens to keep during top-k-filtering "
-                             "in the sample generation. Should be between 1 and inf.")
+    parser.add_argument('-ns', '--num_samples', type=int, required=False, default=8,
+                        help='Number of samples generated and displayed at every checkpoint.')
+    parser.add_argument('-mg', '--max_gen_len', type=int, required=False, default=192,
+                        help='Max length of the generated samples.')
+    parser.add_argument('-tk', '--sampling_top_k', type=int, required=False, default=20,
+                        help='The number of highest probability vocabulary tokens to keep during top-k-filtering '
+                             'in the sample generation. Should be between 1 and inf.')
 
     args = parser.parse_args()
     return args
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     args = get_arguments()
     run_training(args)
