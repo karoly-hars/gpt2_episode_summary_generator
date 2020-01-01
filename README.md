@@ -3,7 +3,7 @@
 With the code in this repo, it is possible to scrape IMDb and Wikipedia to acquire a large number of episode 
 summaries for a TV show, and to use the data to train a GPT-2 model to generate similar summaries. Due to the lack of 
 large-scale datasets, the generated summaries are usually far from perfect, but they are grammatically correct thanks to
-the pre-training of the GPT-2 networks, and they are fun to read.
+the pre-training of the GPT-2 networks. Also, they are fun.
 
 
 ## Requirements
@@ -13,7 +13,7 @@ To code was written/tested using python3 and the following packages:
 - pytorch_transformers 1.2.0
 - Scrapy 1.8.0
 
-and their prerequisites.
+(plus their prerequisites)
 
 
 ## How-To
@@ -22,51 +22,50 @@ Clone the repo and install the required packages.
 
 ### Running the Scrapy spiders/crawlers
 
-##### Running the IMDb spider
+##### IMDb spider
 Running the IMDb spider is fairly simple. It only takes a set of keywords as input params: 
 
 Examples:
 
-- Run ```python3 run_imdb_spider.py --title_keywords star trek``` to download the necessary
- data from all the [Star Trek](https://en.wikipedia.org/wiki/Star_Trek)
-TV shows from IMDb into a JSON file.
+- You can download all the available episode data from all the [Star Trek](https://en.wikipedia.org/wiki/Star_Trek)
+TV shows into a JSON file by running ```python3 run_imdb_spider.py --title_keywords star trek```.
 
-- Run ```python3 run_imdb_spider.py --title_keywords walker texas ranger``` to 
-get the episode data for the show [Walker, Texas Ranger](https://en.wikipedia.org/wiki/Walker,_Texas_Ranger).
+- Similarly, running ```python3 run_imdb_spider.py --title_keywords walker texas ranger``` downloads the episode data
+for the [Walker, Texas Ranger](https://en.wikipedia.org/wiki/Walker,_Texas_Ranger).
 
 
-##### Running the Wikipedia spider
+##### Wikipedia spider
 The Wiki spider is slightly more complicated than the previous one. The user have to provide a starting page 
 for the recursive search in Wikipedia, plus a string that will be used to filter out URLs 
-(URLs that do not contain the substring will be skipped) and a list of keywords,
+(URLs that do not contain the string will be skipped) and a list of keywords,
 that will be used to filter out more pages based on the title of the Wikipedia article. 
 
 Examples:
 
 - Run ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Star_Trek --title_keywords star trek --url_substring Star_Trek```
-to parse all the episode summaries from all [Star Trek](https://en.wikipedia.org/wiki/Star_Trek) TV shows on Wikipedia to a JSON file.
+to parse all the episode summaries from all [Star Trek](https://en.wikipedia.org/wiki/Star_Trek) TV shows to a JSON file.
 
 - Run ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Walker,_Texas_Ranger --title_keywords walker texas ranger --url_substring Walker,_Texas_Ranger```
 to do the same for [Walker, Texas Ranger](https://en.wikipedia.org/wiki/Walker,_Texas_Ranger)
 
-
-In general, it is probably a good idea to choose TV shows or franchises with at least 150-200 episodes,
+---
+In general, it is probably a good idea to choose TV shows or franchises with at least 100-150 episodes,
 otherwise we might end up with subpar results.
 
-After the spiders are finished, it is a good idea to look into the output JSON files and verify that they contain the right data.
+After the spiders are finished, take a quick look into the output JSON files and verify that they contain the right data.
 
 For additional information, check ```python3 run_imdb_spider -h``` and ```python3 run_wiki_spider -h```.
 
 
 ### Training the network
-Call ```python3 train.py``` to train a GPT-2 network and save the weights. The script splits the data into a training 
+Call ```python3 train.py``` to train a GPT-2 network. The script splits the data into a training 
 and validation subset. During the training, there is a checkpoint at every X step. At these checkpoints, the loss on 
 the validation subset is calculated and a few samples are generated for the user to further monitor the progress.
-The best model from the training is saved after the process is finished.
+The best model from the training is saved during the process.
 
 The default params were selected based on what worked best for Star Trek episodes, so it might be a good idea to 
-play around with the hyper-parameters a little bit if you are running the training on a different dataset. 
-Although, in my experience, the results are satisfactory even when training on a different set of data.
+play around with the hyper-parameters a little bit if you are running the training on a different dataset, 
+although, in my experience, the results are satisfactory even when training on a different set of data.
 
 I ran my experiments on a GPU with ~16 GB memory. If you do not have the same resources, you will probably need to 
 decrease the batch size or select a smaller GPT-2 model.
@@ -83,7 +82,7 @@ If you want to play around with other parameters of the generation process, chec
 ```python3 generate.py -h```.
 
 If you changed the GPT-2 version from the default ```gpt2-medium``` in the training, you will also have to changed 
-it for the generation. 
+it for the generation.
 
 Example output for Star Trek:
 ```
