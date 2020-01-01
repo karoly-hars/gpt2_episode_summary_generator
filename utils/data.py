@@ -9,8 +9,8 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
     """
     Tokenizer class for episode summary strings/text.
 
-    The class inherits most of its functionality from the GPT2Tokenizer of pytorch_transformers.
-    Except for the class attributes max_num_words and size_variance_handling. These are used to limit sequence sizes,
+    The class inherits most of its functionality from the pytorch_transformers.GPT2Tokenizer,
+    except for the class attributes max_num_words and size_variance_handling. These are used to limit sequence sizes,
     and determine how to handle oversized text sequences:
 
     - max_num_words: The maximum number of words allowed in our episode summaries
@@ -143,7 +143,7 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
         Given a batch of tokenized text (lists of integers), pad them to the same size.
 
         Find the length of the longest list in the batch,
-        and pad all the sequences in the batch to this size by adding <|endoftext|> tokens to the end of the lists.
+        and pad all the sequences in the batch to this size by adding "<|endoftext|>" tokens to the end of the lists.
 
         :param batch: List of lists
         :return: Torch tensor created from the padded input batch.
@@ -187,7 +187,6 @@ def create_datasets_from_jsons(json_file_paths, tokenizer, val_split_ratio):
     :param val_split_ratio: The ratio between the size of our full dataset and the validation subset
     :return: Tuple of EpisodeSummaryDataset objects (train and val datasets)
     """
-
     print('Creating datasets:')
     episode_summaries = []
     for json_file_path in json_file_paths:
