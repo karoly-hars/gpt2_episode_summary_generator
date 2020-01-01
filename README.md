@@ -1,4 +1,4 @@
-# TV Show Episode Summary Generator
+# Generating TV show episode summaries with GPT-2
 
 With the code in this repo, it is possible to scrape IMDb and Wikipedia to acquire a large number of episode 
 summaries for a TV show, and to use the data to train a GPT-2 model to generate similar summaries. Due to the lack of 
