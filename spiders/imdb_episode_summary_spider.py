@@ -19,13 +19,8 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
 
     def parse(self, response):
         """Parse and yield all relevant episode data from an IMDb page."""
-        tv_show_links = response.xpath(
-            '//table[@class="findList"]/tr[contains(@class, "findResult ")]/td[@class="result_text"]/a/@href'
-        ).extract()
-
-        tv_show_titles = response.xpath(
-            '//table[@class="findList"]/tr[contains(@class, "findResult ")]/td[@class="result_text"]'
-        ).extract()
+        tv_show_links = response.xpath('//td[@class="result_text"]/a/@href').extract()
+        tv_show_titles = response.xpath('//td[@class="result_text"]').extract()
 
         for tv_show_title, tv_show_link in zip(tv_show_titles, tv_show_links):
             tv_show_title = BeautifulSoup(tv_show_title, 'lxml').get_text().strip()
@@ -45,14 +40,13 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
             # get the rating count. if its > 500, this might be a real TV show, not some fan-made project
             # this does not work all the time, but in my experience it might be a good indicator
             rating_count = ratings_wrapper.xpath('//span[@itemprop="ratingCount"]/text()').extract_first()
+
             if rating_count:
                 rating_count = int(rating_count.replace(',', ''))
-                if rating_count > 500:
 
+                if rating_count > 500:
                     # look up episodes
-                    episode_list_urls = response.xpath(
-                        '//div[@id="title-episode-widget"]/div[@class="seasons-and-year-nav"]/div/a/@href'
-                    ).extract()
+                    episode_list_urls = response.xpath('//div[@class="seasons-and-year-nav"]/div/a/@href').extract()
 
                     episode_list_urls = [response.urljoin(e) for e in episode_list_urls if 'season' in e]
 
