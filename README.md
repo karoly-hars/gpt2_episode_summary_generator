@@ -76,7 +76,7 @@ For more information, check ```python3 train.py -h```.
 
 ### Generating episode summaries from scratch
 After you have a trained model, you can generate episodes with
-```generate.py --num_samples <NUMBER_OF_SAMPLES_TO_GENERATE> --random_seed <SEED>```.
+```python3 generate.py --num_samples <NUMBER_OF_SAMPLES_TO_GENERATE> --random_seed <SEED>```.
 
 If you want to play around with other parameters of the generation process, check
 ```python3 generate.py -h```.
