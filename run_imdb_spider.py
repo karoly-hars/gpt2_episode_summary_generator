@@ -12,7 +12,7 @@ def get_arguments():
     parser.add_argument('-t', '--title_keywords', nargs='*', required=True,
                         help='Keywords from the TV show title. '
                              'Ideally they should be lowercase and whitespace separated.'
-                             'Examples: \"star trek\" or \"rick and morty\"')
+                             'Examples: "star trek" or "rick and morty"')
     parser.add_argument('-o', '--output_path', type=str, required=False, default='imdb_episode_summaries.json',
                         help='Path to the output JSON file. If the file already exists, it will be overwritten.')
     args = parser.parse_args()
