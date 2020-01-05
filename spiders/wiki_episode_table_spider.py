@@ -35,7 +35,7 @@ class WikiEpisodeTableSpider(CrawlSpider):
         """Parse and yield all relevant episode data from a Wikipedia page."""
         page_header = response.xpath('//title').extract_first()
 
-        if page_header and all([keyword in page_header.lower() for keyword in self.title_keywords]):       
+        if page_header and all([keyword in page_header.lower() for keyword in self.title_keywords]):
             # parse episode tables
             ep_tables = response.xpath('//table[@class="wikitable plainrowheaders wikiepisodetable"]')
             ep_titles, ep_sums = self.parse_episode_tables(ep_tables)
