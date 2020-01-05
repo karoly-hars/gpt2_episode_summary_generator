@@ -109,7 +109,7 @@ def forward_batch(model, batch, device):
     inputs, labels = inputs.to(device), labels.to(device)
 
     outputs = model(inputs, labels=labels)
-    
+
     return outputs[:2]
 
 
@@ -135,10 +135,10 @@ def run_training(args):
         running_val_loss = 0
         num_val_samples = 0
 
-        for batch in dataloaders['train']:
+        for train_batch in dataloaders['train']:
             optimizer.zero_grad()
 
-            loss, logits = forward_batch(model, batch, device)
+            loss, logits = forward_batch(model, train_batch, device)
 
             loss.backward()
             optimizer.step()
@@ -146,7 +146,7 @@ def run_training(args):
             model.zero_grad()
 
             running_train_loss += loss.item()
-            num_train_samples += batch.size()[0]
+            num_train_samples += train_batch.size()[0]
 
             steps += 1
 
@@ -154,11 +154,11 @@ def run_training(args):
             if steps > 0 and steps % args.checkpoint_steps == 0:
                 model.eval()
 
-                for batch in dataloaders['val']:
-                    loss, logits = forward_batch(model, batch, device)
+                for val_batch in dataloaders['val']:
+                    loss, logits = forward_batch(model, val_batch, device)
 
                     running_val_loss += loss.item()
-                    num_val_samples += batch.size()[0]
+                    num_val_samples += val_batch.size()[0]
 
                 train_state = update_train_state(model, train_state, steps,
                                                  running_train_loss / num_train_samples,
@@ -226,7 +226,7 @@ def get_arguments():
                         help='Epsilon param of the Adam optimizer.')
     parser.add_argument('-ms', '--max_steps', type=int, required=False, default=10000,
                         help='Maximum number of training steps.')
-    parser.add_argument('-cs', '--checkpoint_steps', type=int, required=False, default=100,
+    parser.add_argument('-cs', '--checkpoint_steps', type=int, required=False, default=50,
                         help='Checkpoint frequency during the training process.')
     parser.add_argument('-g', '--gpt2_version', type=str, required=False, default='gpt2-medium',
                         choices=['gpt2, gpt2-medium', 'gpt2-large'],
