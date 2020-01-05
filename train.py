@@ -198,7 +198,7 @@ def get_arguments():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     # Args related to the data
-    parser.add_argument('-s', '--random_seed', type=int, required=False, default=99, help='Random seed.')
+    parser.add_argument('-s', '--random_seed', type=int, required=False, default=42, help='Random seed.')
     parser.add_argument('-v', '--val_split', type=float, required=False, default=0.1,
                         help='Ratio of the validation subset size compared to all available data.')
     parser.add_argument('-m', '--max_num_words', type=int, required=False, default=80,
@@ -224,7 +224,7 @@ def get_arguments():
                         help='Initial learning rate.')
     parser.add_argument('-a', '--adam_epsilon', type=float, required=False, default=1e-8,
                         help='Epsilon param of the Adam optimizer.')
-    parser.add_argument('-ms', '--max_steps', type=int, required=False, default=10000,
+    parser.add_argument('-ms', '--max_steps', type=int, required=False, default=4000,
                         help='Maximum number of training steps.')
     parser.add_argument('-cs', '--checkpoint_steps', type=int, required=False, default=50,
                         help='Checkpoint frequency during the training process.')
