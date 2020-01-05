@@ -95,19 +95,45 @@ it for the generation.
 ### Example outputs
 
 
-#### Star Trek
+#### [Star Trek](https://en.wikipedia.org/wiki/Star_Trek)
+```
+When Spock returns from a secret mission, he is captured by the enemy.
+---
+Sisko, Kira, Quark and Dax get trapped in a wormhole that leads to the Gamma Quadrant, and must use an ionic cloaking device to save themselves.
+---
+The Enterprise assists a small band of rebels from a planet in need of an emissary.
+---
+A damaged alien ship is found on a distant planet. The Enterprise crew is left with the difficult choice of trying to restore its power or destroy it to make way for a new ship.
+---
+The Enterprise encounters a ship of the Xindi, a race of advanced lifeformoids.
+---
+In an attempt to help a Klingon officer who was captured by the Federation, Chakotay, Kim, and Neelix learn of the Klingon commander's predicament, they are arrested in an effort to obtain a confession and return him to the Klingon Empire.
+---
+After Voyager encounters an unusual energy reading, Captain Janeway begins to suspect a traitor aboard the ship. Her suspicions become confirmed when she discovers several of the ship's computer systems are connected to different parts throughout the ship.
+---
+The Enterprise is ordered to a war zone in the Gamma Quadrant and Commander Tucker is brought up against resistance fighters of a rival faction. In an attempt to gain support, Tucker tells an impromptu story of his son's battle in World War II, in which his unit was ordered to a secret outpost near the German border. He is then captured by the resistance and is tortured for information.
 
+```
 
-#### Walker, Texas Ranger
+#### [Walker, Texas Ranger](https://en.wikipedia.org/wiki/Walker,_Texas_Ranger)
+```
 
+```
 
-#### Charmed
+#### [Charmed](https://en.wikipedia.org/wiki/Charmed)
+```
 
+```
 
-#### RuPaul's Drag Race
+#### [RuPaul's Drag Race](https://en.wikipedia.org/wiki/RuPaul's_Drag_Race)
+```
 
+```
 
-#### Game of Thrones
+#### [Game of Thrones](https://en.wikipedia.org/wiki/Game_of_Thrones)
+```
+
+```
 
 
 ## Acknowledgments
