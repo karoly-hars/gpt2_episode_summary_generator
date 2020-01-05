@@ -109,11 +109,7 @@ def forward_batch(model, batch, device):
     inputs, labels = inputs.to(device), labels.to(device)
 
     outputs = model(inputs, labels=labels)
-    loss, logits = outputs[:2]
-
-    del batch
-
-    return loss, logits
+    return outputs[:2]
 
 
 def run_training(args):
@@ -139,8 +135,6 @@ def run_training(args):
         num_val_samples = 0
 
         for batch in dataloaders['train']:
-            num_train_samples += batch.size()[0]
-
             optimizer.zero_grad()
 
             loss, logits = forward_batch(model, batch, device)
@@ -151,6 +145,7 @@ def run_training(args):
             model.zero_grad()
 
             running_train_loss += loss.item()
+            num_train_samples += batch.size()[0]
 
             steps += 1
 
@@ -159,11 +154,10 @@ def run_training(args):
                 model.eval()
 
                 for batch in dataloaders['val']:
-                    num_val_samples += batch.size()[0]
-
                     loss, logits = forward_batch(model, batch, device)
 
                     running_val_loss += loss.item()
+                    num_val_samples += batch.size()[0]
 
                 train_state = update_train_state(model, train_state, steps,
                                                  running_train_loss / num_train_samples,
@@ -206,7 +200,7 @@ def get_arguments():
     parser.add_argument('-s', '--random_seed', type=int, required=False, default=99, help='Random seed.')
     parser.add_argument('-v', '--val_split', type=float, required=False, default=0.1,
                         help='Ratio of the validation subset size compared to all available data.')
-    parser.add_argument('-m', '--max_num_words', type=int, required=False, default=96,
+    parser.add_argument('-m', '--max_num_words', type=int, required=False, default=80,
                         help='Maximum number of words per summary in the training set.')
     parser.add_argument('-sv', '--size_var_handling', type=str, required=False,
                         default='chop_at_sentence_end', choices=['chop_at_sentence_end', 'chop', 'ignore'],
