@@ -35,8 +35,8 @@ for the TV show "Walker, Texas Ranger".
 
 ##### Wikipedia spider
 The Wiki spider is slightly more complicated than the previous one. The user have to provide a starting page 
-for the recursive search in Wikipedia, plus a string that will be used to filter out URLs 
-(URLs that do not contain the string will be skipped) and a list of keywords,
+for the recursive search in Wikipedia, a string that will be used to filter out URLs 
+(URLs that do not contain the string will be skipped), and a list of keywords,
 that will be used to filter out more pages based on the title of the Wikipedia article. 
 
 Examples:
@@ -88,7 +88,7 @@ After you have a trained model, you can generate episodes with
 If you want to play around with other parameters of the generation process, check
 ```python3 generate.py -h```.
 
-If you changed the GPT-2 version from the default ```gpt2-medium``` in the training, you will also have to changed 
+If you changed the GPT-2 version from the default ```gpt2-medium``` in the training, you will also have to change 
 it for the generation.
 
 
