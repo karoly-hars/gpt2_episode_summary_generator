@@ -111,6 +111,8 @@ def forward_batch(model, batch, device):
     outputs = model(inputs, labels=labels)
     loss, logits = outputs[:2]
 
+    del batch
+
     return loss, logits
 
 
@@ -137,6 +139,8 @@ def run_training(args):
         num_val_samples = 0
 
         for batch in dataloaders['train']:
+            num_train_samples += batch.size()[0]
+
             optimizer.zero_grad()
 
             loss, logits = forward_batch(model, batch, device)
@@ -147,7 +151,6 @@ def run_training(args):
             model.zero_grad()
 
             running_train_loss += loss.item()
-            num_train_samples += batch.size()[0]
 
             steps += 1
 
@@ -156,10 +159,11 @@ def run_training(args):
                 model.eval()
 
                 for batch in dataloaders['val']:
+                    num_val_samples += batch.size()[0]
+
                     loss, logits = forward_batch(model, batch, device)
 
                     running_val_loss += loss.item()
-                    num_val_samples += batch.size()[0]
 
                 train_state = update_train_state(model, train_state, steps,
                                                  running_train_loss / num_train_samples,
