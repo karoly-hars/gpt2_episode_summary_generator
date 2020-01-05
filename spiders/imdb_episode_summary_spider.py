@@ -4,6 +4,7 @@ from utils.text_cleansing import clean_ep_data
 
 
 class ImdbEpisodeSummarySpider(scrapy.Spider):
+    """Spider for scraping the episode summaries of a TV show on IMDb."""
 
     name = 'imdb_episode_summary_spider'
     custom_settings = {'ROBOTSTXT_OBEY': False}

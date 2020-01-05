@@ -5,6 +5,7 @@ from utils.text_cleansing import clean_ep_data
 
 
 class WikiEpisodeTableSpider(CrawlSpider):
+    """Crawler for collecting episode summaries by crawling through Wikipedia and parsing season/episode tables."""
 
     name = 'wiki_episode_table_spider'
     custom_settings = {'ROBOTSTXT_OBEY': True}
