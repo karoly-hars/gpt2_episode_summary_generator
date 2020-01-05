@@ -229,7 +229,7 @@ def get_arguments():
     parser.add_argument('-cs', '--checkpoint_steps', type=int, required=False, default=50,
                         help='Checkpoint frequency during the training process.')
     parser.add_argument('-g', '--gpt2_version', type=str, required=False, default='gpt2-medium',
-                        choices=['gpt2, gpt2-medium', 'gpt2-large'],
+                        choices=['gpt2', 'gpt2-medium', 'gpt2-large'],
                         help='Which GPT2 version to use from pytorch-transformers.')
     parser.add_argument('-e', '--early_stopping_patience', type=int, required=False, default=3,
                         help='Patience before initiating early stopping.')
