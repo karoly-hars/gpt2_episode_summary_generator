@@ -109,6 +109,7 @@ def forward_batch(model, batch, device):
     inputs, labels = inputs.to(device), labels.to(device)
 
     outputs = model(inputs, labels=labels)
+    
     return outputs[:2]
 
 
@@ -238,7 +239,7 @@ def get_arguments():
     # sampling args
     parser.add_argument('-ns', '--num_samples', type=int, required=False, default=8,
                         help='Number of samples generated and displayed at every checkpoint.')
-    parser.add_argument('-mg', '--max_gen_len', type=int, required=False, default=192,
+    parser.add_argument('-mg', '--max_gen_len', type=int, required=False, default=135,
                         help='Max length of the generated samples.')
     parser.add_argument('-tk', '--sampling_top_k', type=int, required=False, default=20,
                         help='The number of highest probability vocabulary tokens to keep during top-k-filtering '
