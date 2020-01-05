@@ -27,11 +27,11 @@ Running the IMDb spider is fairly simple. It only takes a set of keywords as inp
 
 Examples:
 
-- You can download all the available episode data from all the "Star Trek"
+- You can download all the available episode data from IMDb for all the "Star Trek"
 TV shows into a JSON file by running ```python3 run_imdb_spider.py --title_keywords star trek```.
 
 - Similarly, running ```python3 run_imdb_spider.py --title_keywords walker texas ranger``` downloads the episode data
-for the TV show "Walker, Texas Ranger".
+from IMDb for the TV show "Walker, Texas Ranger".
 
 ##### Wikipedia spider
 The Wiki spider is slightly more complicated than the previous one. The user have to provide a starting page 
@@ -42,7 +42,7 @@ that will be used to filter out more pages based on the title of the Wikipedia a
 Examples:
 
 - Run ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Star_Trek --title_keywords star trek --url_substring Star_Trek```
-to parse all the episode summaries from all "Star Trek" TV shows to a JSON file.
+to create a JSON with all the "Star Trek" episode summaries from Wikipedia.
 
 - Run ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Walker,_Texas_Ranger --title_keywords walker texas ranger --url_substring Walker,_Texas_Ranger```
 to do the same for "Walker, Texas Ranger".
@@ -55,8 +55,6 @@ otherwise we might end up with subpar results.
 After the spiders are finished, take a quick look into the output JSON files and verify that they contain the right data.
 
 For additional information, check ```python3 run_imdb_spider -h``` and ```python3 run_wiki_spider -h```.
-
----
 
 ##### Pre-scapred episode data
 I ran the spiders for some TV shows to provide an opportunity for users to train a network without running the spiders first.
