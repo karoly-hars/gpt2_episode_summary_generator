@@ -139,7 +139,7 @@ def run_training(args):
         for batch in dataloaders['train']:
             optimizer.zero_grad()
 
-            loss, logits = forward_batch(model, train_batch, device)
+            loss, logits = forward_batch(model, batch, device)
 
             loss.backward()
             optimizer.step()
@@ -147,7 +147,7 @@ def run_training(args):
             model.zero_grad()
 
             running_train_loss += loss.item()
-            num_train_samples += train_batch.size()[0]
+            num_train_samples += batch.size()[0]
 
             steps += 1
 
@@ -156,10 +156,10 @@ def run_training(args):
                 model.eval()
 
                 for batch in dataloaders['val']:
-                    loss, logits = forward_batch(model, val_batch, device)
+                    loss, logits = forward_batch(model, batch, device)
 
                     running_val_loss += loss.item()
-                    num_val_samples += val_batch.size()[0]
+                    num_val_samples += batch.size()[0]
 
                 train_state = update_train_state(model, train_state, steps,
                                                  running_train_loss / num_train_samples,
