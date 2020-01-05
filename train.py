@@ -136,7 +136,7 @@ def run_training(args):
         running_val_loss = 0
         num_val_samples = 0
 
-        for train_batch in dataloaders['train']:
+        for batch in dataloaders['train']:
             optimizer.zero_grad()
 
             loss, logits = forward_batch(model, train_batch, device)
@@ -155,7 +155,7 @@ def run_training(args):
             if steps > 0 and steps % args.checkpoint_steps == 0:
                 model.eval()
 
-                for val_batch in dataloaders['val']:
+                for batch in dataloaders['val']:
                     loss, logits = forward_batch(model, val_batch, device)
 
                     running_val_loss += loss.item()
@@ -252,4 +252,5 @@ def get_arguments():
 
 if __name__ == '__main__':
     args = get_arguments()
+
     run_training(args)
