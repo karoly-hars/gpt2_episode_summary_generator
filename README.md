@@ -63,7 +63,11 @@ The data can be found in ```./scraped_data/```.
 
 
 ### Training the network
-Call the script ```train.py``` to train a GPT-2 network. For example: ```python3 train.py -j scraped_data/star_trek_wiki.json scraped_data/star_trek_imdb.json```
+Call the script ```train.py``` to train a GPT-2 network. 
+For example:
+```
+python3 train.py -j scraped_data/star_trek_wiki.json scraped_data/star_trek_imdb.json
+```
 
 The script splits the data into a training and validation subset. 
 During the training, there is a checkpoint at every X step. At these checkpoints, the loss on 
@@ -79,11 +83,13 @@ For more information, check ```python3 train.py -h```.
 
 
 ### Generating episode summaries from scratch
-After you have a trained model, you can generate episodes with
-```python3 generate.py --num_samples <NUMBER_OF_SAMPLES_TO_GENERATE> --random_seed <SEED>```.
+After you have a trained model, you can generate episodes with:
+```
+python3 generate.py --num_samples <NUMBER_OF_SAMPLES_TO_GENERATE> --random_seed <SEED>
+```
 
-If you want to play around with other parameters of the generation process, check
-```python3 generate.py -h```.
+
+If you want to play around with other parameters of the generation process, check ```python3 generate.py -h```.
 
 If you changed the GPT-2 version from the default ```gpt2-medium``` in the training, you will also have to change 
 it for the generation.
