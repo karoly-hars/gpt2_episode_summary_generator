@@ -168,11 +168,13 @@ def run_training(args):
                 print('train loss: {:.4f} | val loss: {:.4f}'.format(train_state['train_loss'][-1],
                                                                      train_state['val_loss'][-1]))
                 # generate some samples
-                generated = generate_sequence(model, tokenizer,
-                                              max_length=args.max_gen_len,
-                                              num_samples=args.num_samples,
-                                              top_k=args.sampling_top_k,
-                                              device=device)
+                generated = generate_sequence(
+                    model, tokenizer,
+                    max_length=args.max_gen_len,
+                    num_samples=args.num_samples,
+                    top_k=args.sampling_top_k,
+                    device=device
+                )
                 print('-' * 41)
                 print(*generated, sep='\n')
                 print('-' * 41)

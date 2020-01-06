@@ -46,7 +46,7 @@ def top_k_top_p_filtering(logits, top_k=0, top_p=0.0):
 
 
 # originally from somewhere in https://github.com/huggingface/transformers/
-def generate_sequence(model, tokenizer, max_length, context=None, num_samples=1, temperature=1,
+def generate_sequence(model, tokenizer, max_length, context='', num_samples=1, temperature=1,
                       top_k=0, top_p=0, repetition_penalty=1.0, device='cpu'):
     """
     Generate a sequence of words from a some context.
@@ -54,7 +54,7 @@ def generate_sequence(model, tokenizer, max_length, context=None, num_samples=1,
     :param model: Model with LM head
     :param tokenizer: Tokenizer
     :param max_length: The maximum length of the generated sequence
-    :param context: Initial context for the generation. If None, generate from scratch.
+    :param context: Initial context for the generation.
     :param num_samples: Number of samples to generate
     :param temperature: The value used to model the next token probabilities. If 0, the generation is deterministic.
     :param top_k: The number of highest probability vocabulary tokens to keep for top-k-filtering. Between 1 and inf.
@@ -64,14 +64,14 @@ def generate_sequence(model, tokenizer, max_length, context=None, num_samples=1,
     :return: List of generated texts
     """
     # pre-process context
-    if context is None:
-        context = tokenizer._convert_token_to_id('<|endoftext|>')
+    context = tokenizer.convert_tokens_to_ids('<|endoftext|> {}'.format(context))
+    context_len = len(context)
     context = torch.tensor(context, dtype=torch.long, device=device)
     context = context.unsqueeze(0).repeat(num_samples, 1)
 
     generated = context
     with torch.no_grad():
-        for current_len in range(0, max_length):
+        for current_len in range(context_len, max_length):
             inputs = {'input_ids': generated}
 
             outputs = model(**inputs)
