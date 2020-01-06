@@ -34,14 +34,11 @@ Examples:
 - ```python3 run_imdb_spider.py --title_keywords star trek -o star_trek_imdb.json```
 - ```python3 run_imdb_spider.py --title_keywords walker texas ranger -o walker_imdb.json```
 
-- Similarly, running ```python3 run_imdb_spider.py --title_keywords walker texas ranger``` downloads the episode data
-from IMDb for the TV show "Walker, Texas Ranger".
-
 ##### Wikipedia spider
 The Wiki spider is slightly more complicated than the previous one. The user have to provide a starting page 
 for the recursive search in Wikipedia, a string that will be used to filter out URLs 
-(URLs that do not contain the string will be skipped), and a list of keywords,
-that will be used to filter out more pages based on the title of the Wikipedia article.
+(URLs that do not contain the string will be skipped), and a list of keywords to filter out additional 
+pages based the title of the Wikipedia article.
 
 Examples:
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Charmed --title_keywords charmed --url_substring Charmed -o charmed_wiki.json```
@@ -62,7 +59,7 @@ For additional information, check ```python3 run_imdb_spider -h``` and ```python
 
 ##### Pre-scapred episode data
 I ran the spiders for some TV shows to provide an opportunity for users to train a network without running the spiders first.
-The data can be found in ```./scraped_data```.
+The data can be found in ```./scraped_data/```.
 
 
 ### Training the network
