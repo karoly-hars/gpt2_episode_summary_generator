@@ -64,7 +64,9 @@ The data can be found in ```./scraped_data/```.
 
 ### Training the network
 Call the script ```train.py``` to train a GPT-2 network. 
+
 For example:
+
 ```
 python3 train.py -j scraped_data/star_trek_wiki.json scraped_data/star_trek_imdb.json
 ```
@@ -84,6 +86,7 @@ For more information, check ```python3 train.py -h```.
 
 ### Generating episode summaries from scratch
 After you have a trained model, you can generate episodes with:
+
 ```
 python3 generate.py --num_samples <NUMBER_OF_SAMPLES_TO_GENERATE> --random_seed <SEED>
 ```
