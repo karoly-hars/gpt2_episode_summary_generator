@@ -27,12 +27,12 @@ Running the IMDb spider is fairly simple. It only takes a set of keywords as inp
 
 Examples:
 
-- ```python3 run_imdb_spider.py --title_keywords charmed -o charmed_imdb.json``` 
-- ```python3 run_imdb_spider.py --title_keywords game of thrones -o got_imdb.json``` 
+- ```python3 run_imdb_spider.py --title_keywords charmed -o charmed_imdb.json```
+- ```python3 run_imdb_spider.py --title_keywords game of thrones -o got_imdb.json```
 - ```python3 run_imdb_spider.py --title_keywords rupaul\'s drag race -o rupauls_drag_race_imdb.json```
-- ```python3 run_imdb_spider.py --title_keywords south park -o south_park_imdb.json```  
-- ```python3 run_imdb_spider.py --title_keywords star trek -o star_trek_imdb.json``` 
-- ```python3 run_imdb_spider.py --title_keywords walker texas ranger -o walker_imdb_json``` 
+- ```python3 run_imdb_spider.py --title_keywords south park -o south_park_imdb.json```
+- ```python3 run_imdb_spider.py --title_keywords star trek -o star_trek_imdb.json```
+- ```python3 run_imdb_spider.py --title_keywords walker texas ranger -o walker_imdb.json```
 
 - Similarly, running ```python3 run_imdb_spider.py --title_keywords walker texas ranger``` downloads the episode data
 from IMDb for the TV show "Walker, Texas Ranger".
@@ -41,15 +41,15 @@ from IMDb for the TV show "Walker, Texas Ranger".
 The Wiki spider is slightly more complicated than the previous one. The user have to provide a starting page 
 for the recursive search in Wikipedia, a string that will be used to filter out URLs 
 (URLs that do not contain the string will be skipped), and a list of keywords,
-that will be used to filter out more pages based on the title of the Wikipedia article. 
+that will be used to filter out more pages based on the title of the Wikipedia article.
 
 Examples:
-- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Charmed --title_keywords charmed --url_substring Charmed -o charmed_wiki_json``` 
+- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Charmed --title_keywords charmed --url_substring Charmed -o charmed_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Game_of_Thrones --title_keywords game thrones --url_substring Game_of_Thrones -o got_wiki.json```
 - ```python3 run_wiki_spider.py --start_url "https://en.wikipedia.org/wiki/RuPaul's_Drag_Race" --title_keywords rupaul drag race --url_substring "RuPaul%27s_Drag_Race" -o rupauls_drag_race_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/South_Park --title_keywords south park --url_substring South_Park -o south_park_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Star_Trek --title_keywords star trek --url_substring Star_Trek -o star_trek_wiki.json```
-- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Walker,_Texas_Ranger --title_keywords walker texas ranger --url_substring Walker,_Texas_Ranger -o walker_wiki_json```
+- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Walker,_Texas_Ranger --title_keywords walker texas ranger --url_substring Walker,_Texas_Ranger -o walker_wiki.json```
 
 ---
 
