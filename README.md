@@ -27,8 +27,12 @@ Running the IMDb spider is fairly simple. It only takes a set of keywords as inp
 
 Examples:
 
-- You can download all the available episode data from IMDb for all the "Star Trek"
-TV shows into a JSON file by running ```python3 run_imdb_spider.py --title_keywords star trek```.
+- ```python3 run_imdb_spider.py --title_keywords charmed``` 
+- ```python3 run_imdb_spider.py --title_keywords game of thrones``` 
+- ```python3 run_imdb_spider.py --title_keywords rupaul\'s drag race``` 
+- ```python3 run_imdb_spider.py --title_keywords star trek``` 
+- ```python3 run_imdb_spider.py --title_keywords south park``` 
+- ```python3 run_imdb_spider.py --title_keywords walker texas ranger``` 
 
 - Similarly, running ```python3 run_imdb_spider.py --title_keywords walker texas ranger``` downloads the episode data
 from IMDb for the TV show "Walker, Texas Ranger".
@@ -40,12 +44,12 @@ for the recursive search in Wikipedia, a string that will be used to filter out 
 that will be used to filter out more pages based on the title of the Wikipedia article. 
 
 Examples:
-
-- Run ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Star_Trek --title_keywords star trek --url_substring Star_Trek```
-to create a JSON with all the "Star Trek" episode summaries from Wikipedia.
-
-- Run ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Walker,_Texas_Ranger --title_keywords walker texas ranger --url_substring Walker,_Texas_Ranger```
-to do the same for "Walker, Texas Ranger".
+- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Charmed --title_keywords charmed --url_substring Charmed -o charmed_wiki_json``` 
+- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Game_of_Thrones --title_keywords game thrones --url_substring Game_of_Thrones -o got_wiki.json```
+- ```python3 run_wiki_spider.py --start_url "https://en.wikipedia.org/wiki/RuPaul's_Drag_Race" --title_keywords rupaul drag race --url_substring "RuPaul%27s_Drag_Race" -o rupauls_drag_race_wiki.json```
+- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Star_Trek --title_keywords star trek --url_substring Star_Trek -o star_trek_wiki.json```
+- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/South_Park --title_keywords south park --url_substring South_Park -o south_park_wiki.json```
+- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Walker,_Texas_Ranger --title_keywords walker texas ranger --url_substring Walker,_Texas_Ranger -o walker_wiki_json```
 
 ---
 
@@ -62,14 +66,12 @@ The data can be found in ```./scraped_data```.
 
 
 ### Training the network
-Call ```python3 train.py``` to train a GPT-2 network. The script splits the data into a training 
-and validation subset. During the training, there is a checkpoint at every X step. At these checkpoints, the loss on 
+Call the script ```train.py``` to train a GPT-2 network. For example: ```python3 train.py -j scraped_data/star_trek_wiki.json scraped_data/star_trek_imdb.json```
+
+The script splits the data into a training and validation subset. 
+During the training, there is a checkpoint at every X step. At these checkpoints, the loss on 
 the validation subset is calculated and a few samples are generated for the user to further monitor the progress.
 The best model from the training is saved during the process.
-
-The default params were selected based on what worked best for Star Trek episodes, so it might be a good idea to 
-play around with the hyper-parameters a little bit if you are running the training on a different dataset, 
-although, in my experience, the results are satisfactory even when training on a different set of data.
 
 I ran my experiments on a GPU with ~16 GB memory. If you do not have the same resources, you will probably need to 
 decrease the batch size or select a smaller GPT-2 model.
@@ -93,44 +95,6 @@ it for the generation.
 ### Example outputs
 
 
-#### [Star Trek](https://en.wikipedia.org/wiki/Star_Trek)
-```
-The Mirror Universe crew discovers a crashed Federation vessel that was used by Klingons, Borg and humans in a war to steal the ship's secrets.
----
-Odo has been assigned to interrogate a former crewman who was captured in an ancient ritual.
----
-An ion storm wipes out Voyager's transporters and sets the crew on the path to becoming a cyborg.
----
-O'Brien is surprised when he gets a call from a woman who claims to be a Cardassian. She claims to have been kidnapped a year earlier by a Cardassian, whom she claims tortured her for years.
----
-The Enterprise arrives at the home world of a young woman named Vina. She is an Earth native who has been raised in a Roman Catholic family since childhood and never once had any contact with a non-believer. She seems to have inherited her mother's sense of humor, and she enjoys her time with others.
----
-A Bajoran woman comes aboard to claim her ancestor's body.
----
-Sisko, Odo and Dax are on a holonovel about an evil Klingon named Kolzon. Kolzon is the most evil of the Klingons and he uses his psychic powers to torture people.
----
-Dr. Crusher is captured by the Cardassians, and when the crew find out she is a terrorist infiltrating their society, they believe she was involved in espionage. She is found and tortured as a terrorist, and is eventually brought to the Cardassia Prime headquarters.
-```
-
-#### [Walker, Texas Ranger](https://en.wikipedia.org/wiki/Walker,_Texas_Ranger)
-```
-Walker and Trivette go undercover with a Mexican drug lord as he tries to get back at the Rangers with an assassination attempt.
----
-Walker and Trivette are on their way to an old friend of Trivette's, and a Mexican Mafia leader. The leader of the gang was a drug dealer who tried to kill Walker when he was still in prison. But when Walker is released, the drug dealer is in prison again and the gang leader tells Trivette that they are not going through. He then kidnaps Trivette's friend and the friend is forced to help Trivette. When Walker and Trivette discover that the man who kidnapped the friend and the leader had ties to the Mexican Mafia, he sends them to kill him as well.
----
-A man's son is killed by a group of men while they are camping. Walker tracks down the man who murdered his son. Meanwhile, Alex is at a party and is kidnapped by a group of guys. Alex is then held hostage by the group who threaten to kill her.
----
-Walker and Trivette make the perilous trek across the desert to stop a group of Mexican outlaws who've kidnapped his son after he's rescued from being beaten by a rival gang. They also learn there's a deadly ring involving a high-ranking Mexican government agent's wife and two children whom the outlaws use to threaten their enemies.
----
-Walker and Trivette take an old family friend from his life. The man reveals a secret he was afraid to speak out about before dying. A local politician who had a personal vendetta against Walker's family is also in the room. Walker and Trivette are able to convince him to go into exile.
----
-Walker, who has been tracking down the mob boss behind the crime bosses, is in a car accident. He survives but his driver is killed. His partner Walker is taken prisoner to be killed. They get out alive but he is wounded in the head.
----
-After a man who helped build a new jail, is killed in a shootout with guards in a failed attempt, Walker and Trivette attempt to bring to justice the man who ordered the attack.
----
-Walker helps him escape from the police station. After they return from the hospital, Walker and Trivette are asked to attend a memorial for the woman she helped kill.
-```
-
 #### [Charmed](https://en.wikipedia.org/wiki/Charmed)
 ```
 Phoebe Halliwell must stop a warlock who has been killing local witches in the tradition of the Evil Enchantress, whose wand she has kept hidden.
@@ -148,6 +112,25 @@ While on the hunt for the Charmed Ones, Cole gets a surprise from the Book of Sh
 Phoebe and Paige discover a book that they think will help them deal with their Power of 3. After a spell is cast on Piper and Leo, the sisters discover that it is actually a Power of 4 that has been switched.
 ---
 During Chinese New Year, the Halliwell sisters are attacked by a vicious demon known as a 'Banshee'. Piper is left in danger when her Chinese astral self is attacked and scratched, and Phoebe is left in despair when her Chinese astral self is killed. After learning about Chinese, Phoebe casts a spell to have a better understanding of Chinese and ends up getting her hands on a mysterious 'Manual of Chinese Charmed Exercises'.
+```
+
+#### [Game of Thrones](https://en.wikipedia.org/wiki/Game_of_Thrones)
+```
+Tyrion's army is defeated at the Twins. Stannis is defeated at the Twins. Jon Snow takes Stannis prisoners. Daenerys Targaryen plans to conquer Westeros and sends her army to the North.
+---
+Arya is rescued by the survivors and she tells about the events at the Eyrie. Catelyn is forced to deal with the aftermath of the Great River Crossing incident, which leaves her with a scar that she has to hide from the Lannister family. Jon and the Night's Watch are attacked by Stannis' forces as he makes his escape, and he meets an unexpected visitor. Meanwhile, the Ironborn continue to fight against the Riverlands in the south.
+---
+Theon has been captured and killed by the Boltons but Sam has escaped. Tyrion advises Margaery about her sister and she agrees to travel to meet her. Jon decides to go with Rickard to the Wall. Daenerys has a discussion with the Seven Kingdoms' governors but they don't seem interested.
+---
+Bran leaves Castle Black and takes Arya north. Jon is attacked by a group of Wildlings and saves Bran's life by striking a nerve with him. Tyrion decides to take a different route through the wild places to escape. Theon is captured.
+---
+Cersei asks Jaime to stay in Winterfell with her, but he says Tyrion has other plans and that Sansa must accompany Jaime. Theon returns to King's Landing after being attacked by the wildlings. At the Eyrie, Joffrey and Varys try to get Jorah the Dreadfort ready for a siege.
+---
+Tyrion is caught by surprise by an unexpected visitor at the Nightfort, his first, and his first since escaping King's Landing. He is surprised by Jaime's presence and he immediately asks for his leave. Jaime refuses. When Tyrion is about to be imprisoned, he is saved by Podrick. Cersei tries to convince Tyrion to accept the pardon but he declines the request. Jaime and Sansa decide to marry and Tyrion marries Margaery.
+---
+Tyrion, Daenerys, and Rickon meet with the High Sparrow for advice on the future; the Lannister king asks Cersei and her dragons to help him reclaim the Iron Islands; Stannis confronts the Ironborn on the road; the Seven Kingdoms have an uneasy truce.
+---
+Arya Stark receives news that the Lannister army has defeated and captured the Ironborn. She also finds Joffrey, Tywin and Littlefinger dead. At Castle Black, a few loyal members of the Watch are being murdered by Stannis Baratheon.
 ```
 
 #### [RuPaul's Drag Race](https://en.wikipedia.org/wiki/RuPaul's_Drag_Race)
@@ -169,23 +152,61 @@ The queens are tasked by RuPaul to create couture out of materials found at vari
 The queens work toward an epic mini-challenge: creating iconic runway looks, and acting in a RuPaul musical. Guest Judges: RuPaul and Gaby Hoffmann.
 ```
 
-#### [Game of Thrones](https://en.wikipedia.org/wiki/Game_of_Thrones)
+#### [Star Trek](https://en.wikipedia.org/wiki/Star_Trek)
 ```
-Tyrion's army is defeated at the Twins. Stannis is defeated at the Twins. Jon Snow takes Stannis prisoners. Daenerys Targaryen plans to conquer Westeros and sends her army to the North.
+As Starfleet and Federation vessels continue to engage in battle over the Alpha Quadrant, Tilly, the young daughter of the late Dr. Janeway, comes aboard in hopes of rescuing her.
 ---
-Arya is rescued by the survivors and she tells about the events at the Eyrie. Catelyn is forced to deal with the aftermath of the Great River Crossing incident, which leaves her with a scar that she has to hide from the Lannister family. Jon and the Night's Watch are attacked by Stannis' forces as he makes his escape, and he meets an unexpected visitor. Meanwhile, the Ironborn continue to fight against the Riverlands in the south.
+When Captain Picard and fellow cadet Sisko must go on a perilous mission to destroy an ancient Klingon weapon, Sisko must use his wits to navigate a hostile landscape and his unique mind to find his way home safely.
 ---
-Theon has been captured and killed by the Boltons but Sam has escaped. Tyrion advises Margaery about her sister and she agrees to travel to meet her. Jon decides to go with Rickard to the Wall. Daenerys has a discussion with the Seven Kingdoms' governors but they don't seem interested.
+A mysterious entity is in charge of the Enterprise's warp core and it wants to destroy Starfleet ships on the planet Vulcan. The captain, Captain Riker, and his crew have become a target as the Enterprise travels across the galaxy.
 ---
-Bran leaves Castle Black and takes Arya north. Jon is attacked by a group of Wildlings and saves Bran's life by striking a nerve with him. Tyrion decides to take a different route through the wild places to escape. Theon is captured.
+Voyager is assigned to help a race to save the planet that lost a planet they once ruled. Meanwhile the crew tries to keep their morale up and keep the crew awake as they deal with an epidemic that seems to be affecting all members of the crew.
 ---
-Cersei asks Jaime to stay in Winterfell with her, but he says Tyrion has other plans and that Sansa must accompany Jaime. Theon returns to King's Landing after being attacked by the wildlings. At the Eyrie, Joffrey and Varys try to get Jorah the Dreadfort ready for a siege.
+Voyager is attacked by Klingons in the Delta Quadrant. While returning to Voyager's quarters, an unknown assailant takes Chakotay, Janeway, and Paris hostage.
 ---
-Tyrion is caught by surprise by an unexpected visitor at the Nightfort, his first, and his first since escaping King's Landing. He is surprised by Jaime's presence and he immediately asks for his leave. Jaime refuses. When Tyrion is about to be imprisoned, he is saved by Podrick. Cersei tries to convince Tyrion to accept the pardon but he declines the request. Jaime and Sansa decide to marry and Tyrion marries Margaery.
+Captain Archer and Data are investigating the mysterious disappearance of a Federation scientist whose work was recently lost, while Geordi La Forge works on the Enterprise's first transporter beam, which is supposed to be activated by using their telepathic bond. Meanwhile, Worf's father, who is undergoing radiation treatment for leukemia, is being held at a Federation prison camp.
 ---
-Tyrion, Daenerys, and Rickon meet with the High Sparrow for advice on the future; the Lannister king asks Cersei and her dragons to help him reclaim the Iron Islands; Stannis confronts the Ironborn on the road; the Seven Kingdoms have an uneasy truce.
+On one of the ships carrying the crew of the Enterprise, the Enterprise is suddenly attacked by a powerful energy field, which causes all but Picard to lose their powers.
 ---
-Arya Stark receives news that the Lannister army has defeated and captured the Ironborn. She also finds Joffrey, Tywin and Littlefinger dead. At Castle Black, a few loyal members of the Watch are being murdered by Stannis Baratheon.
+Captain Picard is kidnapped by the Romulans who are using him to spy on them. The Enterprise and the Romulans are in a dangerous situation and they must find a way to stop Picard. The Romulans are not the enemies they seem to be, and are not going to fight back when the Romulans threaten their allies. It is the Romulans who have the most power.
+```
+
+#### [South Park](https://en.wikipedia.org/wiki/South_Park)
+```
+Cartman's dream of becoming a hero leads him to confront the truth behind the evil of the Internet.
+---
+Randy Marsh is elected to the local town hall and is the only white person there. When a Muslim student at the school comes to school dressed as a Muslim girl in order to protest her teacher's recent statements about Islam, the Muslim student is mistaken to be a Muslim. A Muslim girl named Aisha becomes upset when she finds out that Aisha has a Muslim identity and takes her home to the Muslim world. Meanwhile, Randy Marsh plots revenge and takes action to stop it.
+---
+Stan decides it would be funny if the boys made an epic quest to find and destroy the Lord of the Rings, and decides to use the boys as a force for good, so he may finally get back to watching the first film for good.
+---
+Stan and Kyle have a falling out. They have issues that have nothing to do with the kids, and everything to do with how they are being punished for their sins. The boys try to reunite their father, Stan, but he is not there. The two men are stuck in an interminable standoff, and must decide whether or not to break through the two giant barbed-wire fences to reach the fence.
+---
+After having been arrested for a minor offense, Eric Cartman is sent to prison. Eric, Kyle and Kenny are sent to a juvenile detention center instead of Cartman. Eric attempts to get the boys to get him a job by saying he likes working on a hot tub. But, Stan refuses to do anything for him.
+---
+The new kid in town is in town and he wants to go to the movie "A Star Is Born", where he gets to suck Kyle's balls and play with his toys. But the problem with the place is that there's a lot of other kids around.
+---
+A new man in town comes across a copy of the new movie "Funny Little Toasters," starring Kenny and Craig. The town is upset at the movie, however, because there were children killed by it.
+---
+Cartman's mom has died. He turns the water faucet on to try and stop the inevitable when the kids come back from school.
+```
+
+#### [Walker, Texas Ranger](https://en.wikipedia.org/wiki/Walker,_Texas_Ranger)
+```
+Walker and Trivette go undercover with a Mexican drug lord as he tries to get back at the Rangers with an assassination attempt.
+---
+Walker and Trivette are on their way to an old friend of Trivette's, and a Mexican Mafia leader. The leader of the gang was a drug dealer who tried to kill Walker when he was still in prison. But when Walker is released, the drug dealer is in prison again and the gang leader tells Trivette that they are not going through. He then kidnaps Trivette's friend and the friend is forced to help Trivette. When Walker and Trivette discover that the man who kidnapped the friend and the leader had ties to the Mexican Mafia, he sends them to kill him as well.
+---
+A man's son is killed by a group of men while they are camping. Walker tracks down the man who murdered his son. Meanwhile, Alex is at a party and is kidnapped by a group of guys. Alex is then held hostage by the group who threaten to kill her.
+---
+Walker and Trivette make the perilous trek across the desert to stop a group of Mexican outlaws who've kidnapped his son after he's rescued from being beaten by a rival gang. They also learn there's a deadly ring involving a high-ranking Mexican government agent's wife and two children whom the outlaws use to threaten their enemies.
+---
+Walker and Trivette take an old family friend from his life. The man reveals a secret he was afraid to speak out about before dying. A local politician who had a personal vendetta against Walker's family is also in the room. Walker and Trivette are able to convince him to go into exile.
+---
+Walker, who has been tracking down the mob boss behind the crime bosses, is in a car accident. He survives but his driver is killed. His partner Walker is taken prisoner to be killed. They get out alive but he is wounded in the head.
+---
+After a man who helped build a new jail, is killed in a shootout with guards in a failed attempt, Walker and Trivette attempt to bring to justice the man who ordered the attack.
+---
+Walker helps him escape from the police station. After they return from the hospital, Walker and Trivette are asked to attend a memorial for the woman she helped kill.
 ```
 
 

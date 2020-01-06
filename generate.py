@@ -42,7 +42,7 @@ def get_arguments():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
 
-    parser.add_argument('-s', '--random_seed', type=int, required=False, default=42, help='Random seed.')
+    parser.add_argument('-s', '--random_seed', type=int, required=False, default=0, help='Random seed.')
     parser.add_argument('-g', '--gpt2_version', type=str, required=False, default='gpt2-medium',
                         choices=['gpt2', 'gpt2-medium', 'gpt2-large'],
                         help='Which GPT2 version to use from pytorch-transformers.')
