@@ -64,7 +64,9 @@ def generate_sequence(model, tokenizer, max_length, context='', num_samples=1, t
     :return: List of generated texts
     """
     # pre-process context
-    context = tokenizer.convert_tokens_to_ids('<|endoftext|> {}'.format(context))
+    context = tokenizer.convert_tokens_to_ids(
+        tokenizer.tokenize('<|endoftext|> {}'.format(context))
+    )
     context_len = len(context)
     context = torch.tensor(context, dtype=torch.long, device=device)
     context = context.unsqueeze(0).repeat(num_samples, 1)

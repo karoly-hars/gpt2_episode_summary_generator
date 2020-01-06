@@ -53,7 +53,7 @@ def get_arguments():
                         help='Save path for the trained model or checkpoints during training.')
     parser.add_argument('-ns', '--num_samples', type=int, required=False, default=8,
                         help='Number of samples generated and displayed at every checkpoint.')
-    parser.add_argument('-mg', '--max_gen_len', type=int, required=False, default=192,
+    parser.add_argument('-mg', '--max_gen_len', type=int, required=False, default=135,
                         help='Max length of the generated samples.')
     parser.add_argument('-c', '--context', type=str, required=False, default='',
                         help='Initial context string used for generation.')

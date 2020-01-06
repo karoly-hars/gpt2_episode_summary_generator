@@ -177,21 +177,21 @@ Cartman's mom has died. He turns the water faucet on to try and stop the inevita
 
 #### [Star Trek](https://en.wikipedia.org/wiki/Star_Trek)
 ```
-As Starfleet and Federation vessels continue to engage in battle over the Alpha Quadrant, Tilly, the young daughter of the late Dr. Janeway, comes aboard in hopes of rescuing her.
+The Borg, having escaped from their planet, attack Voyager and attempt to use it as a base of operations. Torres and Janeway beam down to a planet where they encounter a Klingon ship, only to find they are being followed by a mysterious alien.
 ---
-When Captain Picard and fellow cadet Sisko must go on a perilous mission to destroy an ancient Klingon weapon, Sisko must use his wits to navigate a hostile landscape and his unique mind to find his way home safely.
+When Captain Picard and Data beam back to Earth they find a planet with almost no life and little or no technology. They soon learn that the planet is actually a replica of Earth from the 20th century and the inhabitants of that replica are all slaves.
 ---
-A mysterious entity is in charge of the Enterprise's warp core and it wants to destroy Starfleet ships on the planet Vulcan. The captain, Captain Riker, and his crew have become a target as the Enterprise travels across the galaxy.
+Sisko and a Klingon ambassador are kidnapped by Jem'Hadar rebels in hopes they will join the Dominion War in a war to the last man.
 ---
-Voyager is assigned to help a race to save the planet that lost a planet they once ruled. Meanwhile the crew tries to keep their morale up and keep the crew awake as they deal with an epidemic that seems to be affecting all members of the crew.
+Voyager is trapped on a planet that, while being controlled by humans, has become more or less like another Earth planet when the inhabitants died out.
 ---
-Voyager is attacked by Klingons in the Delta Quadrant. While returning to Voyager's quarters, an unknown assailant takes Chakotay, Janeway, and Paris hostage.
+Voyager is attacked by Borg space drones. One of the drones is killed, while another attempts to kill the Borg from Voyager but is shot by Chakotay. Voyager is ordered to destroy the drones before they destroy everything on the ship. Meanwhile the Doctor has a dream of his mother, Tuvok.
 ---
-Captain Archer and Data are investigating the mysterious disappearance of a Federation scientist whose work was recently lost, while Geordi La Forge works on the Enterprise's first transporter beam, which is supposed to be activated by using their telepathic bond. Meanwhile, Worf's father, who is undergoing radiation treatment for leukemia, is being held at a Federation prison camp.
+Captain Kirk and his first officer take a shuttle from the holodeck. They find a man named Michael Kirk who has been transported to the holodeck where he is playing a holo-created version of themselves. Michael has the same freckles as them, but he speaks very little English so the two of them have to learn to communicate.
 ---
-On one of the ships carrying the crew of the Enterprise, the Enterprise is suddenly attacked by a powerful energy field, which causes all but Picard to lose their powers.
+Odo is about to marry a woman who is his mother.
 ---
-Captain Picard is kidnapped by the Romulans who are using him to spy on them. The Enterprise and the Romulans are in a dangerous situation and they must find a way to stop Picard. The Romulans are not the enemies they seem to be, and are not going to fight back when the Romulans threaten their allies. It is the Romulans who have the most power.
+Kirk and Spock beam down to a planet of genetically enhanced people where the inhabitants have developed a new culture, an advanced technology for space-faring. They take along the Doctor, who is reluctant to be part of such a project, particularly when he sees some of the people in the planet who seem to be more advanced than everyone else in the area, and is troubled when Kirk asks about a race of beings that seem to be very intelligent with the exception of one, who seems to be extremely rude to those around him
 ```
 
 #### [Walker, Texas Ranger](https://en.wikipedia.org/wiki/Walker,_Texas_Ranger)
@@ -216,4 +216,4 @@ Walker helps him escape from the police station. After they return from the hosp
 
 ## Acknowledgments
 Some functions and code snippets were copied from https://github.com/huggingface/transformers
- 
+
