@@ -89,9 +89,7 @@ If you changed the GPT-2 version from the default ```gpt2-medium``` in the train
 it for the generation.
 
 
-### Example outputs
-
-
+### Results
 #### [Charmed](https://en.wikipedia.org/wiki/Charmed)
 ```
 Phoebe Halliwell must stop a warlock who has been killing local witches in the tradition of the Evil Enchantress, whose wand she has kept hidden.
