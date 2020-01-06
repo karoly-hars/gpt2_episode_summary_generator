@@ -27,12 +27,12 @@ Running the IMDb spider is fairly simple. It only takes a set of keywords as inp
 
 Examples:
 
-- ```python3 run_imdb_spider.py --title_keywords charmed``` 
-- ```python3 run_imdb_spider.py --title_keywords game of thrones``` 
-- ```python3 run_imdb_spider.py --title_keywords rupaul\'s drag race``` 
-- ```python3 run_imdb_spider.py --title_keywords star trek``` 
-- ```python3 run_imdb_spider.py --title_keywords south park``` 
-- ```python3 run_imdb_spider.py --title_keywords walker texas ranger``` 
+- ```python3 run_imdb_spider.py --title_keywords charmed -o charmed_imdb.json``` 
+- ```python3 run_imdb_spider.py --title_keywords game of thrones -o got_imdb.json``` 
+- ```python3 run_imdb_spider.py --title_keywords rupaul\'s drag race -o rupauls_drag_race_imdb.json```
+- ```python3 run_imdb_spider.py --title_keywords south park -o south_park_imdb.json```  
+- ```python3 run_imdb_spider.py --title_keywords star trek -o star_trek_imdb.json``` 
+- ```python3 run_imdb_spider.py --title_keywords walker texas ranger -o walker_imdb_json``` 
 
 - Similarly, running ```python3 run_imdb_spider.py --title_keywords walker texas ranger``` downloads the episode data
 from IMDb for the TV show "Walker, Texas Ranger".
@@ -47,8 +47,8 @@ Examples:
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Charmed --title_keywords charmed --url_substring Charmed -o charmed_wiki_json``` 
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Game_of_Thrones --title_keywords game thrones --url_substring Game_of_Thrones -o got_wiki.json```
 - ```python3 run_wiki_spider.py --start_url "https://en.wikipedia.org/wiki/RuPaul's_Drag_Race" --title_keywords rupaul drag race --url_substring "RuPaul%27s_Drag_Race" -o rupauls_drag_race_wiki.json```
-- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Star_Trek --title_keywords star trek --url_substring Star_Trek -o star_trek_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/South_Park --title_keywords south park --url_substring South_Park -o south_park_wiki.json```
+- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Star_Trek --title_keywords star trek --url_substring Star_Trek -o star_trek_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Walker,_Texas_Ranger --title_keywords walker texas ranger --url_substring Walker,_Texas_Ranger -o walker_wiki_json```
 
 ---
@@ -152,25 +152,6 @@ The queens are tasked by RuPaul to create couture out of materials found at vari
 The queens work toward an epic mini-challenge: creating iconic runway looks, and acting in a RuPaul musical. Guest Judges: RuPaul and Gaby Hoffmann.
 ```
 
-#### [Star Trek](https://en.wikipedia.org/wiki/Star_Trek)
-```
-As Starfleet and Federation vessels continue to engage in battle over the Alpha Quadrant, Tilly, the young daughter of the late Dr. Janeway, comes aboard in hopes of rescuing her.
----
-When Captain Picard and fellow cadet Sisko must go on a perilous mission to destroy an ancient Klingon weapon, Sisko must use his wits to navigate a hostile landscape and his unique mind to find his way home safely.
----
-A mysterious entity is in charge of the Enterprise's warp core and it wants to destroy Starfleet ships on the planet Vulcan. The captain, Captain Riker, and his crew have become a target as the Enterprise travels across the galaxy.
----
-Voyager is assigned to help a race to save the planet that lost a planet they once ruled. Meanwhile the crew tries to keep their morale up and keep the crew awake as they deal with an epidemic that seems to be affecting all members of the crew.
----
-Voyager is attacked by Klingons in the Delta Quadrant. While returning to Voyager's quarters, an unknown assailant takes Chakotay, Janeway, and Paris hostage.
----
-Captain Archer and Data are investigating the mysterious disappearance of a Federation scientist whose work was recently lost, while Geordi La Forge works on the Enterprise's first transporter beam, which is supposed to be activated by using their telepathic bond. Meanwhile, Worf's father, who is undergoing radiation treatment for leukemia, is being held at a Federation prison camp.
----
-On one of the ships carrying the crew of the Enterprise, the Enterprise is suddenly attacked by a powerful energy field, which causes all but Picard to lose their powers.
----
-Captain Picard is kidnapped by the Romulans who are using him to spy on them. The Enterprise and the Romulans are in a dangerous situation and they must find a way to stop Picard. The Romulans are not the enemies they seem to be, and are not going to fight back when the Romulans threaten their allies. It is the Romulans who have the most power.
-```
-
 #### [South Park](https://en.wikipedia.org/wiki/South_Park)
 ```
 Cartman's dream of becoming a hero leads him to confront the truth behind the evil of the Internet.
@@ -188,6 +169,25 @@ The new kid in town is in town and he wants to go to the movie "A Star Is Born",
 A new man in town comes across a copy of the new movie "Funny Little Toasters," starring Kenny and Craig. The town is upset at the movie, however, because there were children killed by it.
 ---
 Cartman's mom has died. He turns the water faucet on to try and stop the inevitable when the kids come back from school.
+```
+
+#### [Star Trek](https://en.wikipedia.org/wiki/Star_Trek)
+```
+As Starfleet and Federation vessels continue to engage in battle over the Alpha Quadrant, Tilly, the young daughter of the late Dr. Janeway, comes aboard in hopes of rescuing her.
+---
+When Captain Picard and fellow cadet Sisko must go on a perilous mission to destroy an ancient Klingon weapon, Sisko must use his wits to navigate a hostile landscape and his unique mind to find his way home safely.
+---
+A mysterious entity is in charge of the Enterprise's warp core and it wants to destroy Starfleet ships on the planet Vulcan. The captain, Captain Riker, and his crew have become a target as the Enterprise travels across the galaxy.
+---
+Voyager is assigned to help a race to save the planet that lost a planet they once ruled. Meanwhile the crew tries to keep their morale up and keep the crew awake as they deal with an epidemic that seems to be affecting all members of the crew.
+---
+Voyager is attacked by Klingons in the Delta Quadrant. While returning to Voyager's quarters, an unknown assailant takes Chakotay, Janeway, and Paris hostage.
+---
+Captain Archer and Data are investigating the mysterious disappearance of a Federation scientist whose work was recently lost, while Geordi La Forge works on the Enterprise's first transporter beam, which is supposed to be activated by using their telepathic bond. Meanwhile, Worf's father, who is undergoing radiation treatment for leukemia, is being held at a Federation prison camp.
+---
+On one of the ships carrying the crew of the Enterprise, the Enterprise is suddenly attacked by a powerful energy field, which causes all but Picard to lose their powers.
+---
+Captain Picard is kidnapped by the Romulans who are using him to spy on them. The Enterprise and the Romulans are in a dangerous situation and they must find a way to stop Picard. The Romulans are not the enemies they seem to be, and are not going to fight back when the Romulans threaten their allies. It is the Romulans who have the most power.
 ```
 
 #### [Walker, Texas Ranger](https://en.wikipedia.org/wiki/Walker,_Texas_Ranger)
