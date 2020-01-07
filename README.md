@@ -90,8 +90,7 @@ python3 generate.py --num_samples <NUMBER_OF_SAMPLES_TO_GENERATE> --random_seed 
 
 If you want to play around with other parameters of the generation process, check ```python3 generate.py -h```.
 
-If you changed the GPT-2 version from the default ```gpt2-medium``` in the training, you will also have to change 
-it for the generation.
+If you changed the GPT-2 version from the default ```gpt2``` in the training, you will also have to change it for the generation.
 
 
 ### Results
