@@ -20,7 +20,6 @@ def generate_samples(args):
     model.load_state_dict(torch.load(args.model_load_path))
     model = model.to(device)
     model.eval()
-    print('Done.\n')
 
     # Create tokenizer
     tokenizer = GPT2Tokenizer.from_pretrained(args.gpt2_version)
