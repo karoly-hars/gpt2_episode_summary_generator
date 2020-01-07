@@ -55,10 +55,10 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
         """Look up the episode urls from an episode list page."""
         episode_list = response.xpath('//*[@class="list detail eplist"]')
         episode_page_urls = episode_list.xpath('//*[@class="info"]/strong/a/@href').extract()
-        episode_page_urls = ['https://www.imdb.com{}plotsummary'.format(e) for e in episode_page_urls]
+        episode_page_urls = ['https://www.imdb.com{}'.format(e) for e in episode_page_urls]
 
         for url in episode_page_urls:
-            yield scrapy.Request(url, callback=self.parse_plot_summary_page)
+            yield scrapy.Request(url, callback=self.parse_episode_page)
 
         # look up the page for the previous/next season
         prev = response.xpath('//*[@id="load_previous_episodes"]/@href').extract_first()
@@ -70,9 +70,17 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
         if prev:
             prev_url = "{}episodes{}".format(base_url, prev)
             yield scrapy.Request(prev_url, callback=self.parse_episode_list)
+
         if next:
             next_url = "{}episodes{}".format(base_url, next)
             yield scrapy.Request(next_url, callback=self.parse_episode_list)
+
+    def parse_episode_page(self, response):
+        """Look up the link to the plot summary page from episode page and process it accordingly."""
+        plot_summary_url = response.xpath('//*[text()="Plot Summary"]/@href').extract_first()
+        plot_summary_url = 'https://www.imdb.com{}'.format(plot_summary_url)
+
+        yield scrapy.Request(plot_summary_url, callback=self.parse_plot_summary_page)
 
     def parse_plot_summary_page(self, response):
         """Create and load the episode summary items."""

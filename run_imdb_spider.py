@@ -29,7 +29,7 @@ if __name__ == '__main__':
     # run spider
     process = CrawlerProcess(settings={
         'FEED_FORMAT': 'json',
-        'FEED_URI': args.output_path,
+        'FEED_URI': args.output_path
     })
     process.crawl(ImdbEpisodeSummarySpider, title_keywords=args.title_keywords)
     process.start()
