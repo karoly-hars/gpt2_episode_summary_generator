@@ -11,6 +11,7 @@ def generate_samples(args):
 
     # Initialize training
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    print('Device: {}'.format(str(device)))
 
     # Load pre-trained network weights
     print('Loading pre-trained model...')
@@ -46,7 +47,7 @@ def get_arguments():
     )
 
     parser.add_argument('-s', '--random_seed', type=int, required=False, default=0, help='Random seed.')
-    parser.add_argument('-g', '--gpt2_version', type=str, required=False, default='gpt2-medium',
+    parser.add_argument('-g', '--gpt2_version', type=str, required=False, default='gpt2',
                         choices=['gpt2', 'gpt2-medium', 'gpt2-large'],
                         help='Which GPT2 version to use from pytorch-transformers.')
     parser.add_argument('-mp', '--model_load_path', type=str, required=False, default='ep_summary_gen_model.pth',

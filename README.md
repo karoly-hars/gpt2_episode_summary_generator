@@ -75,9 +75,6 @@ During the training, there is a checkpoint at every X step. At these checkpoints
 the validation subset is calculated and a few samples are generated for the user to further monitor the progress.
 The best model from the training is saved during the process.
 
-I ran my experiments on a GPU with ~16 GB memory. If you do not have the same resources, you will probably need to 
-decrease the batch size or select a smaller GPT-2 model.
-
 Multi-GPU training is currently not implemented.
 
 For more information, check ```python3 train.py -h```.

@@ -118,8 +118,10 @@ def run_training(args):
     # Set seed
     set_random_seeds(args.random_seed)
 
-    # Initialize training
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    print('Device: {}'.format(str(device)))
+
+    # Initialize training
     tokenizer, dataloaders, model, optimizer, scheduler, train_state = initialize_training(args, device)
 
     # Run training process
@@ -230,7 +232,7 @@ def get_arguments():
                         help='Maximum number of training steps.')
     parser.add_argument('-cs', '--checkpoint_steps', type=int, required=False, default=50,
                         help='Checkpoint frequency during the training process.')
-    parser.add_argument('-g', '--gpt2_version', type=str, required=False, default='gpt2-medium',
+    parser.add_argument('-g', '--gpt2_version', type=str, required=False, default='gpt2',
                         choices=['gpt2', 'gpt2-medium', 'gpt2-large'],
                         help='Which GPT2 version to use from pytorch-transformers.')
     parser.add_argument('-e', '--early_stopping_patience', type=int, required=False, default=3,
