@@ -26,13 +26,12 @@ Clone the repo and install the required packages.
 Running the IMDb spider is fairly simple. It only takes a set of keywords as input params: 
 
 Examples:
-
-- ```python3 run_imdb_spider.py --title_keywords charmed -o charmed_imdb.json```
 - ```python3 run_imdb_spider.py --title_keywords game of thrones -o got_imdb.json```
 - ```python3 run_imdb_spider.py --title_keywords rupaul\'s drag race -o rupauls_drag_race_imdb.json```
 - ```python3 run_imdb_spider.py --title_keywords south park -o south_park_imdb.json```
 - ```python3 run_imdb_spider.py --title_keywords star trek -o star_trek_imdb.json```
 - ```python3 run_imdb_spider.py --title_keywords walker texas ranger -o walker_imdb.json```
+- ```python3 run_imdb_spider.py --title_keywords charmed -o charmed_imdb.json```
 
 ##### Wikipedia spider
 The Wiki spider is slightly more complicated than the previous one. The user have to provide a starting page 
@@ -41,12 +40,12 @@ for the recursive search in Wikipedia, a string that will be used to filter out 
 pages based the title of the Wikipedia article.
 
 Examples:
-- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Charmed --title_keywords charmed --url_substring Charmed -o charmed_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Game_of_Thrones --title_keywords game thrones --url_substring Game_of_Thrones -o got_wiki.json```
 - ```python3 run_wiki_spider.py --start_url "https://en.wikipedia.org/wiki/RuPaul's_Drag_Race" --title_keywords rupaul drag race --url_substring "RuPaul%27s_Drag_Race" -o rupauls_drag_race_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/South_Park --title_keywords south park --url_substring South_Park -o south_park_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Star_Trek --title_keywords star trek --url_substring Star_Trek -o star_trek_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Walker,_Texas_Ranger --title_keywords walker texas ranger --url_substring Walker,_Texas_Ranger -o walker_wiki.json```
+- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Charmed --title_keywords charmed --url_substring Charmed -o charmed_wiki.json```
 
 ---
 
@@ -99,25 +98,6 @@ it for the generation.
 
 
 ### Results
-#### [Charmed](https://en.wikipedia.org/wiki/Charmed)
-```
-Phoebe Halliwell must stop a warlock who has been killing local witches in the tradition of the Evil Enchantress, whose wand she has kept hidden.
----
-When Wyatt inadvertently brings the ghost of a serial killer to life, the sisters must bring him back to life or be destroyed.
----
-A demon named Victor, employed by the sisters to confuse them into giving him the Leprechauns, steals their wands. Phoebe casts a spell that turns Paige, Piper and Leo into walking corpses, but ends up turning Leo into a ghost.
----
-Piper and Leo plan a date, and Piper gets a premonition of Leo getting shot. Phoebe sees someone shooting and decides to get some information before Piper goes to the hospital.
----
-Piper and Leo make their home for the first time, and Piper finds a room with a big TV in it. Piper notices an old painting by the name of "Dancing Queen" by Andy Warhol and thinks it is a good idea to have it done in the style of Warhol's painting "The Call of the Wild."
----
-While on the hunt for the Charmed Ones, Cole gets a surprise from the Book of Shadow where he encounters an evil warlock from the future named Kyle Sheridan and a mysterious warlock from the future named Alec Williamson.
----
-Phoebe and Paige discover a book that they think will help them deal with their Power of 3. After a spell is cast on Piper and Leo, the sisters discover that it is actually a Power of 4 that has been switched.
----
-During Chinese New Year, the Halliwell sisters are attacked by a vicious demon known as a 'Banshee'. Piper is left in danger when her Chinese astral self is attacked and scratched, and Phoebe is left in despair when her Chinese astral self is killed. After learning about Chinese, Phoebe casts a spell to have a better understanding of Chinese and ends up getting her hands on a mysterious 'Manual of Chinese Charmed Exercises'.
-```
-
 #### [Game of Thrones](https://en.wikipedia.org/wiki/Game_of_Thrones)
 ```
 Tyrion's army is defeated at the Twins. Stannis is defeated at the Twins. Jon Snow takes Stannis prisoners. Daenerys Targaryen plans to conquer Westeros and sends her army to the North.
@@ -213,6 +193,24 @@ After a man who helped build a new jail, is killed in a shootout with guards in 
 Walker helps him escape from the police station. After they return from the hospital, Walker and Trivette are asked to attend a memorial for the woman she helped kill.
 ```
 
+#### [Charmed](https://en.wikipedia.org/wiki/Charmed)
+```
+Phoebe Halliwell must stop a warlock who has been killing local witches in the tradition of the Evil Enchantress, whose wand she has kept hidden.
+---
+When Wyatt inadvertently brings the ghost of a serial killer to life, the sisters must bring him back to life or be destroyed.
+---
+A demon named Victor, employed by the sisters to confuse them into giving him the Leprechauns, steals their wands. Phoebe casts a spell that turns Paige, Piper and Leo into walking corpses, but ends up turning Leo into a ghost.
+---
+Piper and Leo plan a date, and Piper gets a premonition of Leo getting shot. Phoebe sees someone shooting and decides to get some information before Piper goes to the hospital.
+---
+Piper and Leo make their home for the first time, and Piper finds a room with a big TV in it. Piper notices an old painting by the name of "Dancing Queen" by Andy Warhol and thinks it is a good idea to have it done in the style of Warhol's painting "The Call of the Wild."
+---
+While on the hunt for the Charmed Ones, Cole gets a surprise from the Book of Shadow where he encounters an evil warlock from the future named Kyle Sheridan and a mysterious warlock from the future named Alec Williamson.
+---
+Phoebe and Paige discover a book that they think will help them deal with their Power of 3. After a spell is cast on Piper and Leo, the sisters discover that it is actually a Power of 4 that has been switched.
+---
+During Chinese New Year, the Halliwell sisters are attacked by a vicious demon known as a 'Banshee'. Piper is left in danger when her Chinese astral self is attacked and scratched, and Phoebe is left in despair when her Chinese astral self is killed. After learning about Chinese, Phoebe casts a spell to have a better understanding of Chinese and ends up getting her hands on a mysterious 'Manual of Chinese Charmed Exercises'.
+```
 
 ## Acknowledgments
 Some functions and code snippets were copied from https://github.com/huggingface/transformers
