@@ -15,14 +15,14 @@ def generate_samples(args):
 
     # Load pre-trained network weights
     print('Loading pre-trained model...')
-    config = GPT2Config.from_pretrained(args.gpt2_version)
+    config = GPT2Config.from_pretrained(args.gpt2_size)
     model = GPT2LMHeadModel(config)
     model.load_state_dict(torch.load(args.model_load_path))
     model = model.to(device)
     model.eval()
 
     # Create tokenizer
-    tokenizer = GPT2Tokenizer.from_pretrained(args.gpt2_version)
+    tokenizer = GPT2Tokenizer.from_pretrained(args.gpt2_size)
 
     # Generate some samples
     print('Generating...')
@@ -46,9 +46,9 @@ def get_arguments():
     )
 
     parser.add_argument('-s', '--random_seed', type=int, required=False, default=0, help='Random seed.')
-    parser.add_argument('-g', '--gpt2_version', type=str, required=False, default='gpt2',
+    parser.add_argument('-g', '--gpt2_size', type=str, required=False, default='gpt2',
                         choices=['gpt2', 'gpt2-medium', 'gpt2-large'],
-                        help='Which GPT2 version to use from pytorch-transformers.')
+                        help='Which GPT-2 architecture to use from pytorch-transformers.')
     parser.add_argument('-mp', '--model_load_path', type=str, required=False, default='ep_summary_gen_model.pth',
                         help='Save path for the trained model or checkpoints during training.')
     parser.add_argument('-ns', '--num_samples', type=int, required=False, default=8,

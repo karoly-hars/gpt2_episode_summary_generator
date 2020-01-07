@@ -63,7 +63,7 @@ def initialize_training(args, device):
     """Initalize the tokenizer, the data loaders, the model and the tools of the optimization process."""
     # Create tokenizer, datasets and loaders
     tokenizer = EpisodeSummaryTokenizer.from_pretrained(
-        args.gpt2_version, max_num_words=args.max_num_words, size_variance_handling=args.size_var_handling
+        args.gpt2_size, max_num_words=args.max_num_words, size_variance_handling=args.size_var_handling
     )
     train_dataset, val_dataset = create_datasets_from_jsons(args.json_paths, tokenizer, args.val_split)
 
@@ -79,7 +79,7 @@ def initialize_training(args, device):
     }
 
     # Load pre-trained network weights
-    model = GPT2LMHeadModel.from_pretrained(args.gpt2_version)
+    model = GPT2LMHeadModel.from_pretrained(args.gpt2_size)
     model = model.to(device)
 
     # Prepare optimizer and scheduler
@@ -232,9 +232,9 @@ def get_arguments():
                         help='Maximum number of training steps.')
     parser.add_argument('-cs', '--checkpoint_steps', type=int, required=False, default=50,
                         help='Checkpoint frequency during the training process.')
-    parser.add_argument('-g', '--gpt2_version', type=str, required=False, default='gpt2',
+    parser.add_argument('-g', '--gpt2_size', type=str, required=False, default='gpt2',
                         choices=['gpt2', 'gpt2-medium', 'gpt2-large'],
-                        help='Which GPT2 version to use from pytorch-transformers.')
+                        help='Which GPT-2 architecture to use from pytorch-transformers.')
     parser.add_argument('-e', '--early_stopping_patience', type=int, required=False, default=3,
                         help='Patience before initiating early stopping.')
     parser.add_argument('-mp', '--model_save_path', type=str, required=False, default='ep_summary_gen_model.pth',
