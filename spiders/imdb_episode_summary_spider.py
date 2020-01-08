@@ -7,33 +7,14 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
     """Spider for scraping the episode summaries of a TV show on IMDb."""
 
     name = 'imdb_episode_summary_spider'
-    custom_settings = {'ROBOTSTXT_OBEY': False}
 
-    def __init__(self, title_keywords='', *args, **kwargs):
+    def __init__(self, start_urls, *args, **kwargs):
         super(ImdbEpisodeSummarySpider, self).__init__(*args, **kwargs)
 
         self.allowed_domains = ['www.imdb.com']
-
-        self.title_keywords = [word.lower() for word in title_keywords]
-        start_search_url_substring = '+'.join(self.title_keywords)
-        self.start_urls = ['https://www.imdb.com/find?q={}&s=tt&ref_=fn_al_tt_mr'.format(start_search_url_substring)]
+        self.start_urls = start_urls
 
     def parse(self, response):
-        """Parse and yield all relevant episode data from an IMDb page."""
-        tv_show_links = response.xpath('//*[@class="result_text"]/a/@href').extract()
-        tv_show_titles = response.xpath('//*[@class="result_text"]').extract()
-
-        for tv_show_title, tv_show_link in zip(tv_show_titles, tv_show_links):
-            tv_show_title = BeautifulSoup(tv_show_title, 'lxml').get_text().strip()
-
-            # go into the tv show pages. skip unrelated shows (not containing our keywords), and individual episodes
-            if all([word.lower() in tv_show_title.lower() for word in self.title_keywords]) and \
-                    '(tv series)' in tv_show_title.lower() and '(tv episode)' not in tv_show_title.lower():
-
-                next_page_url = response.urljoin(tv_show_link)
-                yield scrapy.Request(url=next_page_url, callback=self.parse_tv_show_page)
-
-    def parse_tv_show_page(self, response):
         """Look up the episode list urls."""
         # get the rating count. if its > 500, this might be a real TV show, not some fan-made project
         # this does not work all the time, but in my experience it might be a good indicator
@@ -45,7 +26,6 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
             if rating_count > 500:
                 # look up episodes
                 episode_list_urls = response.xpath('//*[@class="seasons-and-year-nav"]/div/a/@href').extract()
-
                 episode_list_urls = [response.urljoin(e) for e in episode_list_urls if 'season' in e]
 
                 for url in episode_list_urls:

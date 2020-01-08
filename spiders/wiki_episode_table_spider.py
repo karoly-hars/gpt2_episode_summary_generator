@@ -8,7 +8,6 @@ class WikiEpisodeTableSpider(CrawlSpider):
     """Crawler for collecting episode summaries by crawling through Wikipedia and parsing season/episode tables."""
 
     name = 'wiki_episode_table_spider'
-    custom_settings = {'ROBOTSTXT_OBEY': True}
 
     def __init__(self, start_url, allow, title_keywords=None, *args, **kwargs):
         super(WikiEpisodeTableSpider, self).__init__(*args, **kwargs)

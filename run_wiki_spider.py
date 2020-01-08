@@ -41,6 +41,7 @@ if __name__ == '__main__':
     process = CrawlerProcess(settings={
         'FEED_FORMAT': 'json',
         'FEED_URI': args.output_path,
+        'ROBOTSTXT_OBEY': True,
         'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0'
     })
     process.crawl(
