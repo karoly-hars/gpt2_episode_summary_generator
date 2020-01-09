@@ -44,27 +44,8 @@ def get_start_urls(title_keywords, imdb_data_path):
     return start_urls
 
 
-def get_arguments():
-    """Parse command line arguments."""
-    parser = argparse.ArgumentParser(
-        description='IMDb episode summary spider.',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    )
-    parser.add_argument('-t', '--title_keywords', nargs='+', required=True,
-                        help='Keywords from the TV show title. '
-                             'Ideally they should be lowercase and whitespace separated.'
-                             'Examples: "star trek" or "rick and morty"')
-    parser.add_argument('-d', '--imdb_data_path', type=str, required=False, default='.',
-                        help='Download and extraction path for the IMDb data subset used for URL extraction.')
-    parser.add_argument('-o', '--output_path', type=str, required=False, default='imdb_episode_summaries.json',
-                        help='Path to the output JSON file. If the file already exists, it will be overwritten.')
-    args = parser.parse_args()
-    return args
-
-
-if __name__ == '__main__':
-    args = get_arguments()
-
+def run_imdb_spider(args):
+    """Define and start process for IMDb scraping."""
     # run some filtering on the title keywords
     title_keywords = [w.lower().strip() for w in args.title_keywords if len(w)]
     assert(len(title_keywords) > 0)
@@ -85,3 +66,26 @@ if __name__ == '__main__':
     })
     process.crawl(ImdbEpisodeSummarySpider, start_urls=start_urls)
     process.start()
+
+
+def get_arguments():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser(
+        description='IMDb episode summary spider.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    parser.add_argument('-t', '--title_keywords', nargs='+', required=True,
+                        help='Keywords from the TV show title. '
+                             'Ideally they should be lowercase and whitespace separated.'
+                             'Examples: "star trek" or "rick and morty"')
+    parser.add_argument('-d', '--imdb_data_path', type=str, required=False, default='.',
+                        help='Download and extraction path for the IMDb data subset used for URL extraction.')
+    parser.add_argument('-o', '--output_path', type=str, required=False, default='imdb_episode_summaries.json',
+                        help='Path to the output JSON file. If the file already exists, it will be overwritten.')
+    args = parser.parse_args()
+    return args
+
+
+if __name__ == '__main__':
+    args = get_arguments()
+    run_imdb_spider(args)

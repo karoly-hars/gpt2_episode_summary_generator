@@ -255,5 +255,4 @@ def get_arguments():
 
 if __name__ == '__main__':
     args = get_arguments()
-
     run_training(args)

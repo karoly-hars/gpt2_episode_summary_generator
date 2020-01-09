@@ -3,6 +3,25 @@ from scrapy.crawler import CrawlerProcess
 from spiders.wiki_episode_table_spider import WikiEpisodeTableSpider
 
 
+def run_wiki_spider(args):
+    """Define and start process for Wikipedia scraping."""
+    # overwrite output
+    with open(args.output_path, 'w') as f:
+        pass
+
+    # run spider
+    process = CrawlerProcess(settings={
+        'FEED_FORMAT': 'json',
+        'FEED_URI': args.output_path,
+        'ROBOTSTXT_OBEY': True,
+        'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0'
+    })
+    process.crawl(
+        WikiEpisodeTableSpider, start_url=args.start_url, allow=args.url_substring, title_keywords=args.title_keywords
+    )
+    process.start()
+
+
 def get_arguments():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
@@ -32,19 +51,4 @@ def get_arguments():
 
 if __name__ == '__main__':
     args = get_arguments()
-
-    # overwrite output
-    with open(args.output_path, 'w') as f:
-        pass
-
-    # run spider
-    process = CrawlerProcess(settings={
-        'FEED_FORMAT': 'json',
-        'FEED_URI': args.output_path,
-        'ROBOTSTXT_OBEY': True,
-        'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0'
-    })
-    process.crawl(
-        WikiEpisodeTableSpider, start_url=args.start_url, allow=args.url_substring, title_keywords=args.title_keywords
-    )
-    process.start()
+    run_wiki_spider(args)
