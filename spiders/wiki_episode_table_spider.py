@@ -9,7 +9,7 @@ class WikiEpisodeTableSpider(CrawlSpider):
 
     name = 'wiki_episode_table_spider'
 
-    def __init__(self, start_url, allow, title_keywords=None, *args, **kwargs):
+    def __init__(self, start_url, allow, title_keywords, *args, **kwargs):
         super(WikiEpisodeTableSpider, self).__init__(*args, **kwargs)
 
         self.start_urls = [start_url]
