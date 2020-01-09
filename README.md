@@ -26,12 +26,12 @@ Clone the repo and install the required packages.
 Running the IMDb spider is fairly simple. It only takes a set of keywords as input params: 
 
 Examples:
-- ```python3 run_imdb_spider.py --title_keywords game of thrones -o got_imdb.json```
-- ```python3 run_imdb_spider.py --title_keywords rupaul\'s drag race -o rupauls_drag_race_imdb.json```
-- ```python3 run_imdb_spider.py --title_keywords south park -o south_park_imdb.json```
-- ```python3 run_imdb_spider.py --title_keywords star trek -o star_trek_imdb.json```
-- ```python3 run_imdb_spider.py --title_keywords walker texas ranger -o walker_imdb.json```
-- ```python3 run_imdb_spider.py --title_keywords charmed -o charmed_imdb.json```
+- ```python3 run_imdb_spider.py --search_keywords game of thrones -o got_imdb.json```
+- ```python3 run_imdb_spider.py --search_keywords rupaul\'s drag race -o rupauls_drag_race_imdb.json```
+- ```python3 run_imdb_spider.py --search_keywords south park -o south_park_imdb.json```
+- ```python3 run_imdb_spider.py --search_keywords star trek -o star_trek_imdb.json```
+- ```python3 run_imdb_spider.py --search_keywords walker texas ranger -o walker_imdb.json```
+- ```python3 run_imdb_spider.py --search_keywords charmed -o charmed_imdb.json```
 
 ##### Wikipedia spider
 The Wiki spider is slightly more complicated than the previous one. The user have to provide a starting page 
