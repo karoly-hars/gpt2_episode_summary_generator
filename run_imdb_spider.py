@@ -84,7 +84,7 @@ def run_imdb_spider(args):
     process = CrawlerProcess(settings={
         'FEED_FORMAT': 'json',
         'FEED_URI': args.output_path,
-        'ROBOTSTXT_OBEY': True,
+        'ROBOTSTXT_OBEY': True
     })
     process.crawl(ImdbEpisodeSummarySpider, start_urls=start_urls)
     process.start()

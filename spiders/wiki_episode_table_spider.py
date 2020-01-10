@@ -27,7 +27,6 @@ class WikiEpisodeTableSpider(CrawlSpider):
                                          allow_domains=self.allowed_domains),
                            callback='parse_wiki_page',
                            follow=True),)
-
         super(WikiEpisodeTableSpider, self)._compile_rules()
 
     def parse_wiki_page(self, response):
