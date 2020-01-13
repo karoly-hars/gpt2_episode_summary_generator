@@ -44,7 +44,6 @@ def get_arguments():
         description='Load a pre-trained GPT-2 model and generate TV show episode summaries.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
-
     parser.add_argument('-s', '--random_seed', type=int, required=False, default=0, help='Random seed.')
     parser.add_argument('-g', '--gpt2_size', type=str, required=False, default='gpt2',
                         choices=['gpt2', 'gpt2-medium', 'gpt2-large'],
