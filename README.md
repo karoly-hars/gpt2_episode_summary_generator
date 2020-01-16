@@ -26,12 +26,12 @@ Clone the repo and install the required packages.
 Running the IMDb spider is fairly simple. It only takes a set of keywords as input params: 
 
 Examples:
+- ```python3 run_imdb_spider.py --search_keywords friends -o friends_imdb.json```
 - ```python3 run_imdb_spider.py --search_keywords game of thrones -o got_imdb.json```
 - ```python3 run_imdb_spider.py --search_keywords rupaul\'s drag race -o rupauls_drag_race_imdb.json```
 - ```python3 run_imdb_spider.py --search_keywords south park -o south_park_imdb.json```
 - ```python3 run_imdb_spider.py --search_keywords star trek -o star_trek_imdb.json```
 - ```python3 run_imdb_spider.py --search_keywords walker texas ranger -o walker_imdb.json```
-- ```python3 run_imdb_spider.py --search_keywords charmed -o charmed_imdb.json```
 
 ##### Wikipedia spider
 The Wiki spider is slightly more complicated than the previous one. The user have to provide a starting page 
@@ -40,12 +40,12 @@ for the recursive search in Wikipedia, a string that will be used to filter out 
 pages based the title of the Wikipedia article.
 
 Examples:
+- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Friends --title_keywords friends --url_substring Friends -o friends_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Game_of_Thrones --title_keywords game thrones --url_substring Game_of_Thrones -o got_wiki.json```
-- ```python3 run_wiki_spider.py --start_url "https://en.wikipedia.org/wiki/RuPaul's_Drag_Race" --title_keywords rupaul drag race --url_substring "RuPaul%27s_Drag_Race" -o rupauls_drag_race_wiki.json```
+- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/RuPaul\'s_Drag_Race --title_keywords rupaul drag race --url_substring "RuPaul%27s_Drag_Race" -o rupauls_drag_race_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/South_Park --title_keywords south park --url_substring South_Park -o south_park_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Star_Trek --title_keywords star trek --url_substring Star_Trek -o star_trek_wiki.json```
 - ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Walker,_Texas_Ranger --title_keywords walker texas ranger --url_substring Walker,_Texas_Ranger -o walker_wiki.json```
-- ```python3 run_wiki_spider.py --start_url https://en.wikipedia.org/wiki/Charmed --title_keywords charmed --url_substring Charmed -o charmed_wiki.json```
 
 ---
 
@@ -94,6 +94,26 @@ If you changed the GPT-2 model size (```--gpt2_size```) from the default ```'gpt
 
 
 ### Results
+
+#### [Friends](https://en.wikipedia.org/wiki/Friends)
+```
+Chandler is shocked to discover that Monica thinks that he is "less special" than Chandler despite the fact that he is the best friend. Chandler tries to get over Monica by making up stories about how different each of them is and how they are all just jealous of Ross. Phoebe has a huge party for her friends and she is very stressed but she doesn't want to go to the doctor as she would have to give an enema.
+---
+When Chandler and Monica accidentally kiss, Chandler develops a crush on her, but he won't tell Monica.
+---
+At the museum, Phoebe's character is killed, and Monica tells her that Joey used to live with him, but now he hates Ross and Rachel. When Phoebe gets to know Joey more, she finds out about him having feelings for Rachel, so Monica tries to tell Joey to get over Rachel.
+---
+It's Thanksgiving weekend and the friends are all hanging out with Rachel's parents where she makes out with Ross. The group ends up going to a museum and Rachel and Ross have a great time together and they end up kissing. Rachel's parents want to get a divorce because of this so Rachel has to agree to be divorced and Ross agrees to be Ross' wife in order to get his mom to agree to divorce.
+---
+Rachel gets a job opening for a new catering company, but her current boss thinks she is too young to compete. Meanwhile, Monica gets a new roommate - Janine, a stripper with an extremely sexy voice.
+---
+Rachel is jealous that Ross is seeing Janice at the coffee shop, but Rachel's phone picks up her call, so she has to make a call. Meanwhile, Monica gets very drunk in front of Mike and Chandler, but ends up helping them get rid of their new fridge.
+---
+Chandler's parents want to hire a nanny, so he takes the job and has a lot of fun. Phoebe is having a hard time being accepted at work; she is very attractive, however, but her co-workers hate her. Ross makes an appointment to be with Monica at 10 a.m., when they both go to a restaurant to eat, but they have to get back because they had a date.
+---
+When Joey and Phoebe go looking for a new roommate, Joey gets a shock when they realize they are not getting along; Monica gets a shock when she learns Rachel was going out with a former Navy SEAL; and Phoebe, when she learns Rachel is not interested in marriage, gets an unexpected shock when she is told Rachel never married.
+```
+
 #### [Game of Thrones](https://en.wikipedia.org/wiki/Game_of_Thrones)
 ```
 Tyrion's army is defeated at the Twins. Stannis is defeated at the Twins. Jon Snow takes Stannis prisoners. Daenerys Targaryen plans to conquer Westeros and sends her army to the North.
@@ -187,25 +207,6 @@ Walker, who has been tracking down the mob boss behind the crime bosses, is in a
 After a man who helped build a new jail, is killed in a shootout with guards in a failed attempt, Walker and Trivette attempt to bring to justice the man who ordered the attack.
 ---
 Walker helps him escape from the police station. After they return from the hospital, Walker and Trivette are asked to attend a memorial for the woman she helped kill.
-```
-
-#### [Charmed](https://en.wikipedia.org/wiki/Charmed)
-```
-Phoebe Halliwell must stop a warlock who has been killing local witches in the tradition of the Evil Enchantress, whose wand she has kept hidden.
----
-When Wyatt inadvertently brings the ghost of a serial killer to life, the sisters must bring him back to life or be destroyed.
----
-A demon named Victor, employed by the sisters to confuse them into giving him the Leprechauns, steals their wands. Phoebe casts a spell that turns Paige, Piper and Leo into walking corpses, but ends up turning Leo into a ghost.
----
-Piper and Leo plan a date, and Piper gets a premonition of Leo getting shot. Phoebe sees someone shooting and decides to get some information before Piper goes to the hospital.
----
-Piper and Leo make their home for the first time, and Piper finds a room with a big TV in it. Piper notices an old painting by the name of "Dancing Queen" by Andy Warhol and thinks it is a good idea to have it done in the style of Warhol's painting "The Call of the Wild."
----
-While on the hunt for the Charmed Ones, Cole gets a surprise from the Book of Shadow where he encounters an evil warlock from the future named Kyle Sheridan and a mysterious warlock from the future named Alec Williamson.
----
-Phoebe and Paige discover a book that they think will help them deal with their Power of 3. After a spell is cast on Piper and Leo, the sisters discover that it is actually a Power of 4 that has been switched.
----
-During Chinese New Year, the Halliwell sisters are attacked by a vicious demon known as a 'Banshee'. Piper is left in danger when her Chinese astral self is attacked and scratched, and Phoebe is left in despair when her Chinese astral self is killed. After learning about Chinese, Phoebe casts a spell to have a better understanding of Chinese and ends up getting her hands on a mysterious 'Manual of Chinese Charmed Exercises'.
 ```
 
 ## Acknowledgments
