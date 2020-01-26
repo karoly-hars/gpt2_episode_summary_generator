@@ -209,6 +209,13 @@ After a man who helped build a new jail, is killed in a shootout with guards in 
 Walker helps him escape from the police station. After they return from the hospital, Walker and Trivette are asked to attend a memorial for the woman she helped kill.
 ```
 
+
+## Extras
+[f6ai](https://github.com/f6ai) was kind enough to create a cool website displaying
+Star Trek episode summaries generated using the code from this repo.
+Check out https://todays-star-trek.netlify.com/ and
+the [corresponding repo](https://github.com/f6ai/today-s-star-trek).
+
+
 ## Acknowledgments
 Some functions and code snippets were copied from https://github.com/huggingface/transformers
-
