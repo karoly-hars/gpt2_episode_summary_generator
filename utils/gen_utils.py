@@ -20,8 +20,8 @@ def top_k_top_p_filtering(logits, top_k=0, top_p=0.0):
     From: https://gist.github.com/thomwolf/1a5a29f6962089e871b94cbd09daf317
 
     :param logits: logits distribution shape (batch size x vocabulary size)
-    :param top_k: Keep only top k tokens with highest probability (top-k filtering).
-    :param top_p: Keep the top tokens with cumulative probability >= top_p (nucleus filtering).
+    :param top_k: Keep only top k tokens with highest probability (top-k filtering)
+    :param top_p: Keep the top tokens with cumulative probability >= top_p (nucleus filtering)
     """
     top_k = min(top_k, logits.size(-1))  # Safety check
     if top_k > 0:
@@ -54,12 +54,12 @@ def generate_sequence(model, tokenizer, max_length, context='', num_samples=1, t
     :param model: Model with LM head
     :param tokenizer: Tokenizer
     :param max_length: The maximum length of the generated sequence
-    :param context: Initial context for the generation.
+    :param context: Initial context for the generation
     :param num_samples: Number of samples to generate
-    :param temperature: The value used to model the next token probabilities. If 0, the generation is deterministic.
-    :param top_k: The number of highest probability vocabulary tokens to keep for top-k-filtering. Between 1 and inf.
-    :param top_p: Keep the top tokens with cumulative probability >= top_p (nucleus filtering). Must be between 0 and 1.
-    :param repetition_penalty: The parameter for repetition penalty. Between 1.0 and + infinity. 1.0 means no penalty.
+    :param temperature: The value used to model the next token probabilities. If 0, the generation is deterministic
+    :param top_k: The number of highest probability vocabulary tokens to keep for top-k-filtering. Between 1 and inf
+    :param top_p: Keep the top tokens with cumulative probability >= top_p (nucleus filtering). Must be between 0 and 1
+    :param repetition_penalty: The parameter for repetition penalty. Between 1.0 and + infinity. 1.0 means no penalty
     :param device: 'gpu' or 'cpu'
     :return: List of generated texts
     """
