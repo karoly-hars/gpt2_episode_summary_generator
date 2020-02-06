@@ -49,7 +49,7 @@ def top_k_top_p_filtering(logits, top_k=0, top_p=0.0):
 def generate_sequence(model, tokenizer, max_length, context='', num_samples=1, temperature=1,
                       top_k=0, top_p=0, repetition_penalty=1.0, device='cpu'):
     """
-    Generate a sequence of words from a some context.
+    Generate a sequence of words from some context.
 
     :param model: Model with LM head
     :param tokenizer: Tokenizer
