@@ -62,9 +62,9 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
         Decide, if a word is possibly the end a of a sentence.
 
         In the previous processing steps, the whitespaces are removed from before "." characters, and the text is
-        split around the whitespaces, so a word is likely at the end of a sentence, if it ends with ".", "!" or "?".
+        split around the whitespaces, so a word is likely at the end of a sentence if it ends with ".", "!" or "?".
         However, abbreviations form exception, since these often end in "."s.
-        So we have have to filter out words that are possibly abbreviations, or just to be safe, any word that contains
+        So we have have to filter out words that are possibly abbreviations, plus just to be safe, any word that contains
         only dots and capital letters.
 
         :param word: A string
