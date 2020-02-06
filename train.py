@@ -24,7 +24,7 @@ def update_train_state(model, train_state, steps, train_loss, val_loss):
     - update losses
     - save the model in case of an improvement
     - check for early stopping
-    - return update training state
+    - return the updated training state
 
     :param model: Model to train
     :param train_state: A dictionary representing the training state values
@@ -60,7 +60,7 @@ def update_train_state(model, train_state, steps, train_loss, val_loss):
 
 
 def initialize_training(args, device):
-    """Initalize the tokenizer, the data loaders, the model and the tools of the optimization process."""
+    """Initialize the tokenizer, the data loaders, the model and other components for the optimization process."""
     # Create tokenizer, datasets and loaders
     tokenizer = EpisodeSummaryTokenizer.from_pretrained(
         args.gpt2_size, max_num_words=args.max_num_words, size_variance_handling=args.size_var_handling
@@ -169,7 +169,7 @@ def run_training(args):
                 print('\n============== {} / {} =============='.format(steps, args.max_steps))
                 print('train loss: {:.4f} | val loss: {:.4f}'.format(train_state['train_loss'][-1],
                                                                      train_state['val_loss'][-1]))
-                # generate some samples
+                # Generate some samples
                 generated = generate_sequence(
                     model, tokenizer,
                     max_length=args.max_gen_len,
@@ -181,13 +181,13 @@ def run_training(args):
                 print(*generated, sep='\n')
                 print('-' * 41)
 
-                # check for early stopping
+                # Check for early stopping
                 if train_state['stop_early']:
                     print('\nTraining finished with early stopping.')
                     print('best loss: {:.4f}'.format(train_state['min_val_loss']))
                     break
 
-                # reset sums and set model back to train
+                # Reset sums and set model back to train
                 running_train_loss = 0
                 num_train_samples = 0
                 running_val_loss = 0
@@ -212,7 +212,7 @@ def get_arguments():
                         help='Describes how to handle training sequences with different lengths. Options:'
                              ' -"chop_at_sentence_end": Chop long texts to make sure '
                              'that they contain <= words than max_num_words, but only chop at the end of a sentence.'
-                             ' If that is not possible, drop data instance, and do not include in during training.'
+                             ' If that is not possible, drop data instance, and do not include it in the dataset.'
                              ' -"chop": Chop long texts to make sure that they contain <= words than max_num_words. '
                              'It is okay to chop after any word.'
                              ' -"ignore": Ignore size variance and tokenize all text without chopping.'
