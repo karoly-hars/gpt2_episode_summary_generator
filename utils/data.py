@@ -97,7 +97,7 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
 
         If the number of words in the text is shorter than the threshold, return it. If it is longer,
         try to break off some sentences to make it shorter.
-        If it is impossible without cutting in the middle of a sentence, return None
+        If it is impossible without cutting in the middle of a sentence, return None.
 
         :param text: String text
         :return: A string summary or None
@@ -146,7 +146,7 @@ class EpisodeSummaryTokenizer(GPT2Tokenizer):
         and pad all the sequences in the batch to this size by adding "<|endoftext|>" tokens to the end of the lists.
 
         :param batch: List of lists
-        :return: Torch tensor created from the padded input batch.
+        :return: Torch tensor created from the padded input batch
         """
         block_size = len(max(batch, key=len))
         padded_batch = []
