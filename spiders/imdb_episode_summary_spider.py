@@ -48,11 +48,11 @@ class ImdbEpisodeSummarySpider(scrapy.Spider):
         base_url = base_url.split("episodes?")[0]
 
         if prev:
-            prev_url = "{}episodes{}".format(base_url, prev)
+            prev_url = '{}episodes{}'.format(base_url, prev)
             yield scrapy.Request(prev_url, callback=self.parse_episode_list)
 
         if next:
-            next_url = "{}episodes{}".format(base_url, next)
+            next_url = '{}episodes{}'.format(base_url, next)
             yield scrapy.Request(next_url, callback=self.parse_episode_list)
 
     def parse_episode_page(self, response):
